@@ -41,6 +41,7 @@ const LoginPage: React.FC = () => {
       if (email === "admin.sendit@email.com" && password === "admin1234") {
         console.log("Admin login successful");
         localStorage.setItem("token", "admin-token");
+        localStorage.setItem("role", "admin");
         navigate("/admin-dashboard");
         return;
       }
@@ -49,10 +50,17 @@ const LoginPage: React.FC = () => {
         email,
         password,
       });
+
+      // check if the response is successful
+      if(response.data.token){
       console.log("Login successful", response.data);
-      // Save token and redirect user
+      // Save token and role, then redirect user to dashboard
       localStorage.setItem("token", response.data.token);
+      localStorage.setItem("role", "user");
       navigate("/user-dashboard");
+
+      } else {
+        setError("Invalid credentials. Please try again.");}
     } catch (err) {
       setError("Invalid credentials. Please try again.");
     }

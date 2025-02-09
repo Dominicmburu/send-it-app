@@ -1,52 +1,58 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import IndexPage from "./IndexPage";
-import LoginPage from "./LoginPage"; 
-import SignupPage from "./SignupPage"; 
-import AdminPage from "./AdminPage";
-
-// const ProtectedRoute = ({ children }) => {
-//   const token = localStorage.getItem("token");
-//   return token ? children : <Navigate to="/login" />;
-// };
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import AdminDashboard from './AdminPage';
+import UserDashboard from './UserPage';
+import LoginPage from './LoginPage';
+import SignupPage from './SignupPage';
+import IndexPage from './IndexPage';
 
 
 const ProtectedRoute = ({ children, role }) => {
-  const token = localStorage.getItem("token");
-  const userRole = localStorage.getItem("role"); // Assuming role is stored in localStorage
+  const token = localStorage.getItem('token');
+  const userRole = localStorage.getItem('role'); // Assuming role is stored in localStorage
 
   if (!token) {
     return <Navigate to="/login" />;
   }
 
-  if (role === "admin" && userRole !== "admin") {
-    return <Navigate to="/user-dashboard" />;
+  if (role === 'admin' && userRole !== 'admin') {
+    return <Navigate to="/login" />;
   }
 
-  if (role === "user" && userRole !== "user") {
-    return <Navigate to="/admin-dashboard" />;
+  if (role === 'user' && userRole !== 'user') {
+    return <Navigate to="/login" />;
   }
 
   return children;
 };
 
-
-
-
-
-function App() {
+const App = () => {
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
-        <Route path="/" element={<IndexPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage/>} />
-        <Route path="/admin-dashboard" element={<ProtectedRoute role='admin'><AdminPage/></ProtectedRoute>} />
-        <Route path="/user-dashboard" element={<ProtectedRoute role='user'><h1>User Dashboard</h1></ProtectedRoute>} />
-        <Route path="*" element={<h1>Not Found</h1>} />
-        <Route path="/:rest*" element={<h1>Not Found</h1>} />
+        <Route
+          path="/admin-dashboard"
+          element={
+            <ProtectedRoute role="admin">
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/user-dashboard"
+          element={
+            <ProtectedRoute role="user">
+              <UserDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route path='/' element={<IndexPage/>} />
+        <Route path="/signup" element={<SignupPage />} />
+      
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
-}
+};
 
 export default App;

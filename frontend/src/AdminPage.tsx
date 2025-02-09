@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./admin.css";
+import { CiSearch } from "react-icons/ci";
+import { IoMdCreate } from "react-icons/io";
 
 const AdminDashboard: React.FC = () => {
   const [parcels, setParcels] = useState([]);
@@ -19,7 +21,12 @@ const AdminDashboard: React.FC = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (!token || token !== "admin-token") {
+    const role = localStorage.getItem("role");
+    console.log("Token:", token);
+    console.log("Role:", role);
+
+    if (!token || role !== "admin") {
+      console.log("Redirecting to login...");
       navigate("/login");
     }
     fetchParcels();
@@ -55,6 +62,7 @@ const AdminDashboard: React.FC = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("role");
     navigate("/login");
   };
 
@@ -64,11 +72,71 @@ const AdminDashboard: React.FC = () => {
   ];
 
   return (
-    <div className="admin-dashboard">
-      <h2 className="title">Admin Dashboard</h2>
+    <>
+    
+    
+      <div className="navbar-wrapper">
+        <div className="navbar-container">
+          {/* Navbar welcome message( Welcome Admin), search bar and logout button */}
+          <nav className="navbar">
+            <p>Welcome,<strong> Admin</strong></p>
+            <div className="search-input">
+            <input type="text" placeholder="Search parcels" />
+            <CiSearch  className="icon"/>
+            </div>
+            <div className="logout">
+            <button onClick={handleLogout}>Logout</button></div>
+          </nav>
+        </div>
+      </div>
+
+<div className="wrapper">
+
+
+  {/* Display parcels */}
+  <div className="container">
       {error && <p className="error-message">{error}</p>}
-      <button onClick={handleLogout} className="logout-button">Logout</button>
-      <button onClick={() => setShowModal(true)} className="send-parcel-button">Send Parcel</button>
+      <button onClick={() => setShowModal(true)} className="btn btn-primary"><IoMdCreate /> Create a parcel</button>
+
+
+      <div className="parcels">
+        <h3>Parcels</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Parcel ID</th>
+              <th>Sender</th>
+              <th>Receiver</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {allParcels.map((parcel) => (
+              <tr key={parcel.id}>
+                <td>{parcel.id}</td>
+                <td>{parcel.sender}</td>
+                <td>{parcel.receiver}</td>
+                <td>{parcel.status}</td>
+                <td>
+                  <button onClick={() => updateParcelStatus(parcel.id, "delivered")}>
+                    Mark as delivered
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        
+
+      </div>
+    
+
+
+
+
+
+    <div className="admin-dashboard">
       <table className="parcel-table">
         <thead>
           <tr>
@@ -117,6 +185,18 @@ const AdminDashboard: React.FC = () => {
         </div>
       )}
     </div>
+    </div>
+
+</div>
+    
+
+
+
+
+
+
+
+    </>
   );
 };
 
