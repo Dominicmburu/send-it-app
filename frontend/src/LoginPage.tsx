@@ -37,13 +37,14 @@ const LoginPage: React.FC = () => {
     
     try {
 
-// Hardcoded admin credentials
-if (email === "admin.sendit@email.com" && password === "admin1234") {
-    console.log("Admin login successful");
-    navigate("/admin-dashboard");
-    return;
-  }
-  
+        // Hardcoded admin credentials
+      if (email === "admin.sendit@email.com" && password === "admin1234") {
+        console.log("Admin login successful");
+        localStorage.setItem("token", "admin-token");
+        navigate("/admin-dashboard");
+        return;
+      }
+      
       const response = await axios.post("/api/auth/login", {
         email,
         password,
@@ -69,7 +70,6 @@ if (email === "admin.sendit@email.com" && password === "admin1234") {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
             placeholder="Email"
           />
         </div>
@@ -79,8 +79,7 @@ if (email === "admin.sendit@email.com" && password === "admin1234") {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className=" border rounded-lg focus:outline-none focus:border-blue-500"
-        placeholder="Password"
+            placeholder="Password"
           />
         </div>
         <div className="phone-address">
@@ -92,7 +91,6 @@ if (email === "admin.sendit@email.com" && password === "admin1234") {
         </button>
         <p>Have no account? <Link to={'/signup'}>SignUp</Link></p>
         </div>
-       
       </form>
         </div>
       
