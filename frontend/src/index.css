@@ -191,6 +191,8 @@ button:active{
   /* background-color: var(--border-color); */
   background-color: var(--background-dark-grey);
   padding : 0.5rem 0;
+  margin-bottom: 4rem;
+
 }
 .navbar-container{
  /* padding: 1rem 0; */
@@ -240,9 +242,12 @@ button:active{
   background-color: inherit;
   
 }
+.theme{color: var(--primary-color);}
 
 .logout{
   display: flex;
+  align-items: center;
+  gap: 4rem;
 }
 
 .icon{
@@ -291,7 +296,47 @@ button:active{
 }
 
 
+.notification{
+  display: grid;
+  place-content: center;
+height: 1rem;
+width: 1rem;border-radius: 50%;
+background-color:var(--background-dark-color);
+padding: 1rem;
+cursor: pointer;
+}
+
+.user-orders-container{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.sent-orders, .received-orders{
+  display: flex;
+  flex-direction: column;
+}
+
+.sent-orders-wrapper{
+  display: flex;
+  flex-direction: column;
+  /* gap: 1rem; */
+}
+
 @media screen and (min-width: 600px){
+  /* .sent-orders-wrapper{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  } */
+  .user-orders-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-content: space-between;
+    gap: 4rem;
+    /* align-items: center; */
+  }
 
   .navbar{
     grid-template-columns: 2fr 2fr 1fr;
