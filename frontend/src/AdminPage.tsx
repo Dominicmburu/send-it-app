@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import "./admin.css";
 import { CiSearch, CiNoWaitingSign } from "react-icons/ci";
 import { IoMdCreate } from "react-icons/io";
-import { FaClipboardCheck } from "react-icons/fa";
 import { IoIosNotifications } from "react-icons/io";
 
 const AdminDashboard: React.FC = () => {
@@ -119,82 +118,6 @@ const AdminDashboard: React.FC = () => {
           >
             <IoMdCreate /> Create a parcel
           </button>
-
-          <div className="parcels-wrapper">
-            <h3>Parcels</h3>
-            {/* <div className="parcels">
-              <div className="parcel-card">
-                <div className="phone-address">
-                  <p>Parcel ID</p>
-                  <div className="status">
-                    <FaClipboardCheck className="delivered-icon" />
-                    <p>Delivered</p>
-                  </div>
-                </div>
-                <div className="sender phone-address">
-                  <p>From : John Doe</p>
-                  <p>To: Richard Mark</p>
-                </div>
-                <div className="status">
-                  <CiNoWaitingSign className="pending-icon" />
-                  <p>Status</p>
-                </div>
-                <div className="actions">
-                  <button>Update</button>
-                  <button>Vew map</button>
-                </div>
-              </div>
-              <div className="parcel-card">
-                <div className="parcel-id">Parcel ID</div>
-                <div className="sender">Sender</div>
-                <div className="receiver">Receiver</div>
-                <div className="status">Status</div>
-                <div className="actions">Actions</div>
-              </div>
-              <div className="parcel-card">
-                <div className="parcel-id">Parcel ID</div>
-                <div className="sender">Sender</div>
-                <div className="receiver">Receiver</div>
-                <div className="status">Status</div>
-                <div className="actions">Actions</div>
-              </div>
-              <div className="parcel-card">
-                <div className="parcel-id">Parcel ID</div>
-                <div className="sender">Sender</div>
-                <div className="receiver">Receiver</div>
-                <div className="status">Status</div>
-                <div className="actions">Actions</div>
-              </div>
-            </div> */}
-          </div>
-          <table>
-            <thead>
-              <tr>
-                <th>Parcel ID</th>
-                <th>Sender</th>
-                <th>Receiver</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {allParcels.map((parcel) => (
-                <tr key={parcel.id}>
-                  <td>{parcel.id}</td>
-                  <td>{parcel.sender}</td>
-                  <td>{parcel.receiver}</td>
-                  <td>{parcel.status}</td>
-                  <td>
-                    <button
-                      onClick={() => updateParcelStatus(parcel.id, "delivered")}
-                    >
-                      Mark as delivered
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
 
           <div className="admin-dashboard">
             <table className="parcel-table">
