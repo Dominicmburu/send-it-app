@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { IoIosNotifications } from "react-icons/io";
 import { CiSearch, CiNoWaitingSign } from "react-icons/ci";
 import { IoMdCreate } from "react-icons/io";
-import { FaClipboardCheck } from "react-icons/fa";
+import { FaClipboardCheck,FaMapMarkerAlt  } from "react-icons/fa";
+
 
 const IndexPage: React.FC = () => {
   return (
@@ -49,7 +50,7 @@ const IndexPage: React.FC = () => {
               <div className="notification">
                 <IoIosNotifications className="theme" />
               </div>
-              <button onClick={()=>{handleLogout()}}>Logout</button>
+              <button>Logout</button>
             </div>
           </nav>
         </div>
@@ -120,7 +121,7 @@ const IndexPage: React.FC = () => {
                 </div>
               </div>
               <div className="sender phone-address">
-                <p>To: Richard Mark</p>
+                <p>From: Dianna Pickford</p>
               </div>
               <div className="phone-address">
                 <p>Pick up : Nairobi </p>
@@ -128,7 +129,7 @@ const IndexPage: React.FC = () => {
               </div>
               <div className="actions phone-address">
                 <button>Update</button>
-                <button>Vew map</button>
+                <button><FaMapMarkerAlt /> Vew map</button>
               </div>
             </div>
           </div>

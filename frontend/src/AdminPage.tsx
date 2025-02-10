@@ -122,7 +122,7 @@ const AdminDashboard: React.FC = () => {
 
           <div className="parcels-wrapper">
             <h3>Parcels</h3>
-            <div className="parcels">
+            {/* <div className="parcels">
               <div className="parcel-card">
                 <div className="phone-address">
                   <p>Parcel ID</p>
@@ -165,7 +165,7 @@ const AdminDashboard: React.FC = () => {
                 <div className="status">Status</div>
                 <div className="actions">Actions</div>
               </div>
-            </div>
+            </div> */}
           </div>
           <table>
             <thead>
