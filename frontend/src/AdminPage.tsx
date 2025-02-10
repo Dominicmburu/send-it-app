@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./admin.css";
-import { CiSearch } from "react-icons/ci";
+import { CiSearch,CiNoWaitingSign } from "react-icons/ci";
 import { IoMdCreate } from "react-icons/io";
+import { FaClipboardCheck } from "react-icons/fa";
 
 const AdminDashboard: React.FC = () => {
   const [parcels, setParcels] = useState([]);
@@ -79,7 +80,10 @@ const AdminDashboard: React.FC = () => {
         <div className="navbar-container">
           {/* Navbar welcome message( Welcome Admin), search bar and logout button */}
           <nav className="navbar">
+            <div className="admin-logo">
+            <img src="./src/images/senditlogo.png" alt="" className="admin-logo-image" />
             <p>Welcome,<strong> Admin</strong></p>
+            </div>
             <div className="search-input">
             <input type="text" placeholder="Search parcels" />
             <CiSearch  className="icon"/>
@@ -99,8 +103,54 @@ const AdminDashboard: React.FC = () => {
       <button onClick={() => setShowModal(true)} className="btn btn-primary"><IoMdCreate /> Create a parcel</button>
 
 
-      <div className="parcels">
+      <div className="parcels-wrapper">
         <h3>Parcels</h3>
+        <div className="parcels">
+            <div className="parcel-card">
+                <div className="phone-address">
+                  <p>Parcel ID</p>
+                  <div className="status">
+                    <FaClipboardCheck className="delivered-icon"/>
+                    <p>Delivered</p>
+                  </div>
+                </div>
+                <div className="sender phone-address">
+                  <p>From : John Doe</p>
+                  <p>To: Richard Mark</p>
+                </div>
+                <div className="status">
+                  <CiNoWaitingSign className="pending-icon"/>
+                  <p>Status</p>
+                </div>
+                <div className="actions">
+                  <button>Update</button>
+                  <button>Vew map</button>
+                </div>
+            </div>
+            <div className="parcel-card">
+                <div className="parcel-id">Parcel ID</div>
+                <div className="sender">Sender</div>
+                <div className="receiver">Receiver</div>
+                <div className="status">Status</div>
+                <div className="actions">Actions</div>
+            </div>
+            <div className="parcel-card">
+                <div className="parcel-id">Parcel ID</div>
+                <div className="sender">Sender</div>
+                <div className="receiver">Receiver</div>
+                <div className="status">Status</div>
+                <div className="actions">Actions</div>
+            </div>
+            <div className="parcel-card">
+                <div className="parcel-id">Parcel ID</div>
+                <div className="sender">Sender</div>
+                <div className="receiver">Receiver</div>
+                <div className="status">Status</div>
+                <div className="actions">Actions</div>
+            </div>
+        </div>
+        
+      </div>
         <table>
           <thead>
             <tr>
@@ -129,7 +179,7 @@ const AdminDashboard: React.FC = () => {
         </table>
         
 
-      </div>
+      
     
 
 

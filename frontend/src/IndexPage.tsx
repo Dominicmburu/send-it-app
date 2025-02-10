@@ -19,6 +19,20 @@ const IndexPage: React.FC = () => {
            
           </div>
         </div>
+
+        {/* User dashboard */}
+
+        <div className="wrapper">
+          <div className="container">
+            <nav>
+              <p>Welcome, <strong> JOHNSON</strong></p>
+              <div>
+                < notification/>
+                <button>Logout</button>
+              </div>
+            </nav>
+          </div>
+        </div>
         
         
     </div>

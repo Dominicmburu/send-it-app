@@ -96,7 +96,7 @@ form input{
   color: var(--font-light-color);
   width: full;
   border: 1px solid var(--border-color);
-  border-radius: 0.1rem;
+  border-radius: 0.25rem;
 }
 form input:focus{
   outline: none;
@@ -112,7 +112,7 @@ form input:focus{
 }
 .btn{
   padding: 0.6rem 0.9rem;
-  border-radius: 0.1rem;
+  border-radius: 0.25rem;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
@@ -190,9 +190,10 @@ button:active{
   width: 100%;
   /* background-color: var(--border-color); */
   background-color: var(--background-dark-grey);
+  padding : 0.5rem 0;
 }
 .navbar-container{
- padding: 1rem 0;
+ /* padding: 1rem 0; */
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
@@ -212,9 +213,8 @@ button:active{
   justify-content: center;
   width: 100%;
   /* max-width: 600px; */
-  /* background-color: var(--background-light-color); */
   background-color: var(--background-dark-color); 
-  border-radius: 0.1rem;
+  border-radius: 0.25rem;
   padding-right: 1rem;
 }
 
@@ -229,7 +229,7 @@ button:active{
 
 .logout button{
   padding: 0.4rem 0.9rem;
-  border-radius: 0.1rem;
+  border-radius: 0.25rem;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
@@ -247,14 +247,54 @@ button:active{
 
 .icon{
   color:var(--font-light-color);
-  height: 2rem;
-  width: 2rem;
+  height: 1.5rem;
+  width: 1.5rem;
 }
+
+.status{
+  display: flex;
+  flex: row;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+}
+.delivered-icon{
+  color: green;
+  height: 0.9rem;
+  width: 0.9rem;
+}
+
+.pending{
+  display: flex;
+  flex: row;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+}
+.pending-icon{
+  color: red;
+  height: 0.9rem;
+  width: 0.9rem;
+}
+
+.admin-logo{
+  /* background-color: red; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  /* justify-content: center; */
+  gap: 1rem;
+}
+.admin-logo-image{
+  height: 4rem;
+  width: 4rem;
+}
+
 
 @media screen and (min-width: 600px){
 
   .navbar{
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: 2fr 2fr 1fr;
   }
   .logout{
   justify-content: flex-end;
