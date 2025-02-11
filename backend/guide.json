@@ -1,0 +1,55 @@
+{
+    "authentication": {
+      "login": {
+        "username": "string",
+        "password": "string"
+      },
+      "register": {
+        "username": "string",
+        "email": "string",
+        "password": "string",
+        "phone_number": "string",
+        "address": "string"
+      }
+    },
+    "users": {
+      "user_id": "integer",
+      "username": "string",
+      "email": "string",
+      "password": "string",
+      "phone_number": "string",
+      "address": "string",
+      "role": "enum('user', 'admin')",
+      "created_at": "timestamp",
+      "updated_at": "timestamp"
+    },
+    "parcels": {
+      "parcel_id": "integer",
+      "sender_id": "integer",
+      "receiver_id": "integer",
+      "pickup_location": "string",
+      "destination": "string",
+      "status": "enum('pending', 'in transit', 'delivered', 'cancelled')",
+      "created_at": "timestamp",
+      "updated_at": "timestamp",
+      "deleted_at": "timestamp (nullable)"
+    },
+    "parcel_updates": {
+      "update_id": "integer",
+      "parcel_id": "integer",
+      "status": "enum('pending', 'in transit', 'delivered', 'cancelled')",
+      "updated_by": "integer",
+      "update_message": "string",
+      "updated_at": "timestamp"
+    },
+    "notifications": {
+      "notification_id": "integer",
+      "user_id": "integer",
+      "parcel_id": "integer (nullable)",
+      "message": "string",
+      "type": "enum('email')",
+      "status": "enum('sent', 'failed')",
+      "created_at": "timestamp"
+    }
+  }
+  
