@@ -23,6 +23,14 @@ const IndexPage: React.FC = () => {
               Get Started NOW
             </Link>
           </div>
+
+        {/* login form */}
+
+          <form action="">
+            <input type="email" placeholder="Enter email address"/>
+            <input type="password" name="" id="" placeholder="Enter your password"/>
+            <button className="btn btn-primary">Login</button>
+          </form>
         </div>
       </div>
     </div>
