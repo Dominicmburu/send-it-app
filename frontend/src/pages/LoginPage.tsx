@@ -69,9 +69,9 @@ const LoginPage: React.FC = () => {
   return (
     <div className="container">
         <div className="form-container">
-        <h2 className="text-2xl font-bold text-blue-600 mb-4">Login</h2>
+        <h2>Login</h2>
       {error && <p className="error">{error}</p>}
-      <form onSubmit={handleLogin} className="bg-white p-6 rounded-lg shadow-md w-80">
+      <form onSubmit={handleLogin}>
         <div className="form-group">
           <label>Email</label>
           <input

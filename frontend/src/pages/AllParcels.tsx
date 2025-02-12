@@ -29,11 +29,28 @@ const AllParcels: React.FC = () => {
     }
   };
 
-  const parcels = [
-    { id: 1, sender: "John Doe", receiver: "Jane Doe", parcel_status: "Pending" },
+  interface parcelProp {
+    id: number;
+    sender: string;
+    receiver: string;
+    parcel_status: string;
+  }
 
-    { id: 2, sender: "John Doe", receiver: "Jane Doe", parcel_status: "Delivered" },
-    { id: 3, sender: "Johnson", receiver: "jane", parcel_status: "pending" },
+  const parcels = [
+    {
+      id: 1,
+      sender: "John Doe",
+      receiver: "Jane Doe",
+      parcel_status: "Pending",
+    },
+
+    {
+      id: 2,
+      sender: "John Doe",
+      receiver: "Jane Doe",
+      parcel_status: "Delivered",
+    },
+    { id: 3, sender: "Johnson", receiver: "jane", parcel_status: "Pending" },
   ];
 
   return (
@@ -44,11 +61,13 @@ const AllParcels: React.FC = () => {
           <IoIosArrowBack /> Back to Dashboard
         </Link>
         {error && <p className="error-message">{error}</p>}
-
-        {/* Loop through all parcels */}
-        {parcels.map((parcel: any) => (
-          <ParcelOverview key={parcel.id} {...parcel} />
-        ))}
+        <h4>Recent parcels</h4>
+        <div className="parcels-container">
+          {/* Loop through all parcels */}
+          {parcels.map((parcel: parcelProp) => (
+            <ParcelOverview key={parcel.id} {...parcel} />
+          ))}
+        </div>
 
         {/* <div className="admin-dashboard">
           <table className="parcel-table">

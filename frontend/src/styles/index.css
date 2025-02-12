@@ -27,6 +27,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+
 body{
   font-family: 'Poppins', sans-serif;
   font-size: 1rem;
@@ -156,6 +157,25 @@ button:active{
 .btn-primary:active {
   background-color: var(--primary-color-dark);
   border-color: var(--primary-color-dark);
+}
+
+/* Secondary button base style */
+.btn-secondary {
+  background-color: transparent; /* or white for a neutral base */
+  border: 2px solid #FCA311;
+  color: #FCA311;
+  padding: 0.5em 1em;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Hover state: fill background and change text color */
+.btn-secondary:hover,
+.btn-secondary:focus {
+  background-color: #FCA311;
+  color: #fff;
 }
 
 
