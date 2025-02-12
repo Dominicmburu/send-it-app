@@ -2,6 +2,10 @@ import bcrypt from 'bcrypt';
 import { pool, poolConnect, sql } from '../config/database';
 import { signToken } from '../utils/jwt';
 import { sendEmail } from '../utils/email';
+import { randomBytes, scrypt as _scrypt, timingSafeEqual } from 'crypto';
+import { promisify } from 'util';
+
+const scrypt = promisify(_scrypt);
 
 interface RegisterInput {
   username: string;
@@ -25,8 +29,11 @@ export const registerUser = async ({
   address,
 }: RegisterInput): Promise<void> => {
   await poolConnect;
-  const hashedPassword = await bcrypt.hash(password, 10);
+  const salt = randomBytes(16).toString('hex');
+  const hashBuffer = (await scrypt(password, salt, 64)) as Buffer;
+  const hashedPassword = `${salt}.${hashBuffer.toString('hex')}`;
   const role = 'user';
+  // const role = 'admin';
   
   const request = pool.request();
   request.input('p_user_id', sql.Int, null);
@@ -66,7 +73,19 @@ export const loginUser = async ({ username, password }: LoginInput): Promise<str
     throw new Error('Invalid credentials');
   }
 
-  const isValid = await bcrypt.compare(password, user.password);
+  const [salt, storedHash] = user.password.split('.');
+  if (!salt || !storedHash) {
+    throw new Error('Invalid credentials');
+  }
+
+  const hashBuffer = (await scrypt(password, salt, 64)) as Buffer;
+  const storedHashBuffer = Buffer.from(storedHash, 'hex');
+
+  if (hashBuffer.length !== storedHashBuffer.length) {
+    throw new Error('Invalid credentials');
+  }
+
+  const isValid = timingSafeEqual(hashBuffer, storedHashBuffer);
   if (!isValid) {
     throw new Error('Invalid credentials');
   }
