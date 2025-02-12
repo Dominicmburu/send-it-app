@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
-
 import { CiSearch, CiNoWaitingSign } from "react-icons/ci";
 import { IoMdCreate } from "react-icons/io";
 import { IoIosNotifications } from "react-icons/io";
@@ -13,7 +12,7 @@ const AdminDashboard: React.FC = () => {
   const [parcels, setParcels] = useState([]);
   const [error, setError] = useState("");
   // const [showModal, setShowModal] = useState(false);
-  
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -58,12 +57,10 @@ const AdminDashboard: React.FC = () => {
     navigate("/login");
   };
 
-  
-
   return (
     <>
       {/* Navbar */}
-      <div className="navbar-wrapper" style={{position: "fixed", width: "100%"}}>
+      <div className="navbar-wrapper">
         <div className="navbar-container">
           {/* Navbar welcome message( Welcome Admin), search bar and logout button */}
           <nav className="navbar">
@@ -73,19 +70,24 @@ const AdminDashboard: React.FC = () => {
                 alt=""
                 className="admin-logo-image"
               />
-              <p>
-                Welcome,<strong> Admin</strong>
-              </p>
             </div>
             <div className="search-input">
               <input type="text" placeholder="Search parcels" />
               <CiSearch className="icon" />
             </div>
+
             <div className="logout">
+              <p>
+                Welcome,
+                <br />
+                <strong> Admin</strong>
+              </p>
               <div className="notification">
                 <IoIosNotifications className="theme" />
               </div>
+
               <button
+                className="btn"
                 onClick={() => {
                   handleLogout();
                 }}
@@ -98,24 +100,31 @@ const AdminDashboard: React.FC = () => {
       </div>
 
       <div className="wrapper">
-        <div className="container" >
-          {/* Link to view all parcels */}
-        
-          <Link to="/admin-dashboard/parcels" 
-          className="back-link" style={{marginTop: "5rem"}}>
-            <FaEye />
-            View all parcels
-          </Link>
-        
-        {/* Form to create a parcel */}
-        <h4>Create a parcel</h4>
-        {error && <p className="error">{error}</p>}
-        <CreateParcelForm/>
+        <div className="container">
+          <div className="create-parcel-container">
+            {/* Link to view all parcels */}
+            <div style={{ width:'200px'}}>
+              <Link
+                to="/admin-dashboard/parcels"
+                className="back-link"
+                style={{ marginTop: "5rem", marginBottom: "2rem" }}
+              >
+                <FaEye />
+                View all parcels
+              </Link>
+            </div>
+            <div style={{width:'100%'}}>
+              {/* Form to create a parcel */}
+              <h4 style={{paddingBottom:'1rem'}}>Create a parcel</h4>
+              {error && <p className="error">{error}</p>}
+
+              <CreateParcelForm />
+            </div>
+          </div>
         </div>
       </div>
     </>
   );
 };
-
 
 export default AdminDashboard;

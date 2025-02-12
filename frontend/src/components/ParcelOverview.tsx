@@ -17,13 +17,20 @@ const ParcelOverview: React.FC<ParcelOverviewProps> = ({
   parcel_status,
 }) => {
   return (
-    <div
-      className="parcel-overview"
-
-    >
-      <Link to={`/admin-dashboard/parcels/${id}`} style={{color:'inherit'}}>
+    <div className="parcel-overview">
+      <Link
+        to={`/admin-dashboard/parcels/${id}`}
+        style={{
+          color: "inherit",
+          display: "flex",
+          flexDirection: "column",
+          gap: "1rem",
+        }}
+      >
         <div className="phone-address">
-          <p>Parcel ID: {id}</p>
+          <p>
+            Parcel ID: <strong className="pl">{id}</strong>
+          </p>
           <div className="status">
             {parcel_status == "Pending" ? (
               <CiNoWaitingSign className="pending-icon" />
@@ -34,12 +41,12 @@ const ParcelOverview: React.FC<ParcelOverviewProps> = ({
             <p>{parcel_status}</p>
           </div>
         </div>
-        <div className="sender phone-address">
+        <div className="phone-address">
           <p>
-            To: <strong>{receiver}</strong>
+            To: <strong className="pl">{receiver}</strong>
           </p>
           <p>
-            From: <strong>{sender}</strong>
+            From: <strong className="pl">{sender}</strong>
           </p>
         </div>
       </Link>

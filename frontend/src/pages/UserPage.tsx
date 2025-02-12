@@ -56,15 +56,17 @@ const UserPage: React.FC = () => {
                   alt=""
                   className="admin-logo-image"
                 />
-                <p>
-                  Welcome,<strong> JOHNSON</strong>
-                </p>
+                
+                
               </div>
               <div className="search-input">
                 <input type="text" placeholder="Search parcels" />
                 <CiSearch className="icon" />
               </div>
               <div className="logout">
+              <p>
+                  Welcome,<br /><strong> JOHNSON</strong>
+                </p>
                 <div className="notification">
                   <IoIosNotifications className="theme" />
                 </div>

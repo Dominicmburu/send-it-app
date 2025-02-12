@@ -54,22 +54,23 @@ const AllParcels: React.FC = () => {
   ];
 
   return (
-    <>
+    <div className="wrapper">
       {/* Display parcels */}
       <div className="container">
-        <Link to="/admin-dashboard" className="back-link">
-          <IoIosArrowBack /> Back to Dashboard
-        </Link>
-        {error && <p className="error-message">{error}</p>}
-        <h4>Recent parcels</h4>
-        <div className="parcels-container">
-          {/* Loop through all parcels */}
-          {parcels.map((parcel: parcelProp) => (
-            <ParcelOverview key={parcel.id} {...parcel} />
-          ))}
-        </div>
+        <div className="parcel-overview-wrapper">
+          <Link to="/admin-dashboard" className="back-link">
+            <IoIosArrowBack /> Back to dashboard
+          </Link>
+          {error && <p className="error-message">{error}</p>}
+          <h4 style={{paddingBlock:'2rem'}}>Recent parcels</h4>
+          <div className="parcels-container">
+            {/* Loop through all parcels */}
+            {parcels.map((parcel: parcelProp) => (
+              <ParcelOverview key={parcel.id} {...parcel} />
+            ))}
+          </div>
 
-        {/* <div className="admin-dashboard">
+          {/* <div className="admin-dashboard">
           <table className="parcel-table">
             <thead>
               <tr>
@@ -100,8 +101,9 @@ const AllParcels: React.FC = () => {
             </tbody>
           </table>
         </div> */}
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 

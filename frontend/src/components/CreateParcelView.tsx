@@ -1,25 +1,27 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-const handleCreateParcel = async () => {  }
+const handleCreateParcel = async () => {};
 
 const CreateParcelForm: React.FC = () => {
-
-    const [newParcel, setNewParcel] = useState({
-        parcel_id: "",
-        sender_id: "",
-        receiver_id: "",
-        pickup_location: "",
-        destination: "",
-        status: "pending",
-      });
+  const [newParcel, setNewParcel] = useState({
+    parcel_id: "",
+    sender_id: "",
+    receiver_id: "",
+    pickup_location: "",
+    destination: "",
+    status: "pending",
+  });
 
   return (
     <>
-      <form action="" className="parcel-form">
+      <form
+        action=""
+        className="parcel-form"
+      >
         <input
           type="text"
-          placeholder="Parcel id e.g KE34444"
+          placeholder="Parcel ID"
           onChange={(e) =>
             setNewParcel({ ...newParcel, parcel_id: e.target.value })
           }
@@ -73,11 +75,10 @@ const CreateParcelForm: React.FC = () => {
           <option value="cancelled">Cancelled</option>
         </select>
         <div>
-        <button onClick={handleCreateParcel} className="btn btn-primary">
-          Create Parcel
-        </button>
+          <button onClick={handleCreateParcel} className="btn btn-primary">
+            Create Parcel
+          </button>
         </div>
-       
       </form>
     </>
   );
