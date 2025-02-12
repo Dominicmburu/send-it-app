@@ -18,8 +18,8 @@ const CreateParcelForm: React.FC = () => {
     <>
       <form action="" className="parcel-form">
         <input
-          type="number"
-          placeholder="Parcel ID"
+          type="text"
+          placeholder="Parcel id e.g KE34444"
           onChange={(e) =>
             setNewParcel({ ...newParcel, parcel_id: e.target.value })
           }
@@ -72,9 +72,12 @@ const CreateParcelForm: React.FC = () => {
           <option value="delivered">Delivered</option>
           <option value="cancelled">Cancelled</option>
         </select>
+        <div>
         <button onClick={handleCreateParcel} className="btn btn-primary">
           Create Parcel
         </button>
+        </div>
+       
       </form>
     </>
   );

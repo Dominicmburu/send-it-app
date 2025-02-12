@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
 import { CiNoWaitingSign } from "react-icons/ci";
+import ParcelOverview from "../components/ParcelOverview";
 
 const AllParcels: React.FC = () => {
   const [error, setError] = useState("");
@@ -29,10 +30,10 @@ const AllParcels: React.FC = () => {
   };
 
   const parcels = [
-    { id: 1, sender: "John Doe", receiver: "Jane Doe", status: "Pending" },
+    { id: 1, sender: "John Doe", receiver: "Jane Doe", parcel_status: "Pending" },
 
-    { id: 2, sender: "John Doe", receiver: "Jane Doe", status: "Pending" },
-    { id: 3, sender: "Johnson", receiver: "jane", status: "pending" },
+    { id: 2, sender: "John Doe", receiver: "Jane Doe", parcel_status: "Delivered" },
+    { id: 3, sender: "Johnson", receiver: "jane", parcel_status: "pending" },
   ];
 
   return (
@@ -44,20 +45,12 @@ const AllParcels: React.FC = () => {
         </Link>
         {error && <p className="error-message">{error}</p>}
 
-        <div className="parcel-overview">
-          <div className="phone-address">
-                          <p>Parcel ID: 334020934</p>
-                          <div className="status">
-                            <CiNoWaitingSign className="pending-icon" />
-                            <p>Pending</p>
-                          </div>
-                        </div>
-                        <div className="sender phone-address">
-                          <p>To: Richard Mark</p>
-                        </div>
-        </div>
+        {/* Loop through all parcels */}
+        {parcels.map((parcel: any) => (
+          <ParcelOverview key={parcel.id} {...parcel} />
+        ))}
 
-        <div className="admin-dashboard">
+        {/* <div className="admin-dashboard">
           <table className="parcel-table">
             <thead>
               <tr>
@@ -87,7 +80,7 @@ const AllParcels: React.FC = () => {
               ))}
             </tbody>
           </table>
-        </div>
+        </div> */}
       </div>
     </>
   );

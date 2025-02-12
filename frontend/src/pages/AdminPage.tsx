@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import "./admin.css";
+
+
 import { CiSearch, CiNoWaitingSign } from "react-icons/ci";
 import { IoMdCreate } from "react-icons/io";
 import { IoIosNotifications } from "react-icons/io";
 import { FaEye } from "react-icons/fa";
-import CreateParcelForm from "./CreateParcelView";
+import CreateParcelForm from "../components/CreateParcelView";
 
 const AdminDashboard: React.FC = () => {
   const [parcels, setParcels] = useState([]);
@@ -62,7 +63,7 @@ const AdminDashboard: React.FC = () => {
   return (
     <>
       {/* Navbar */}
-      <div className="navbar-wrapper">
+      <div className="navbar-wrapper" style={{position: "fixed", width: "100%"}}>
         <div className="navbar-container">
           {/* Navbar welcome message( Welcome Admin), search bar and logout button */}
           <nav className="navbar">
@@ -97,11 +98,11 @@ const AdminDashboard: React.FC = () => {
       </div>
 
       <div className="wrapper">
-        <div className="container">
+        <div className="container" >
           {/* Link to view all parcels */}
         
           <Link to="/admin-dashboard/parcels" 
-          className="back-link">
+          className="back-link" style={{marginTop: "5rem"}}>
             <FaEye />
             View all parcels
           </Link>

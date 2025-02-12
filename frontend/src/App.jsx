@@ -5,14 +5,14 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import AdminDashboard from "./AdminPage";
-import UserDashboard from "./UserPage";
-import LoginPage from "./LoginPage";
-import SignupPage from "./SignupPage";
-import IndexPage from "./IndexPage";
-import AllParcels from "./AllParcels";
-import ParcelDetails from "./ParcelDetails";
-import MapPage from "./MapPage";
+import AdminDashboard from "./pages/AdminPage";
+import UserDashboard from "./pages/UserPage";
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
+import IndexPage from "./pages/IndexPage";
+import AllParcels from "./pages/AllParcels";
+import ParcelDetails from "./pages/ParcelDetails";
+import MapPage from "./pages/MapPage";
 
 const ProtectedRoute = ({ children, role }) => {
   const token = localStorage.getItem("token");
@@ -47,6 +47,7 @@ const App = () => {
           path="/admin-dashboard/parcels/:parcelId"
           element={<ParcelDetails />}
         />
+
 
         <Route path="/map"  element={<MapPage/>}/>
 
