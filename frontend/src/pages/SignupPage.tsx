@@ -55,7 +55,7 @@ const SignupPage: React.FC = () => {
   return (
     <div className="container">
         <div className="form-container">
-      <h2 className="">Sign Up</h2>
+      <h4 className="">Sign Up</h4>
       {error && <p className="error">{error}</p>}
       <form onSubmit={handleSignup} className="bg-white p-6 rounded-lg shadow-md w-80">
         <div className="form-group">

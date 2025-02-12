@@ -36,7 +36,8 @@ body {
 }
 
 a {
-  font-weight: 500;
+  font-weight: 400;
+  font-size: 1rem;
   color: var(--primary-color);
   text-decoration: inherit;
 }
@@ -44,6 +45,9 @@ a:hover {
   color: var(--primary-color-dark);
 }
 
+form label{
+  font-size: 1rem;
+}
 h1 {
   font-size: 3.2em;
   line-height: 1.1;

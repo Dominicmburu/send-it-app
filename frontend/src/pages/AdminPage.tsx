@@ -7,11 +7,12 @@ import { IoMdCreate } from "react-icons/io";
 import { IoIosNotifications } from "react-icons/io";
 import { FaEye } from "react-icons/fa";
 import CreateParcelForm from "../components/CreateParcelView";
+import Notification from "../components/Notification";
 
 const AdminDashboard: React.FC = () => {
   const [parcels, setParcels] = useState([]);
   const [error, setError] = useState("");
-  // const [showModal, setShowModal] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
 
   const navigate = useNavigate();
 
@@ -82,10 +83,11 @@ const AdminDashboard: React.FC = () => {
                 <br />
                 <strong> Admin</strong>
               </p>
-              <div className="notification">
+              <div className="notification" 
+              onClick={()=>{setShowNotification(true)}}>
                 <IoIosNotifications className="theme" />
               </div>
-
+                {showNotification && (<Notification/>)}
               <button
                 className="btn"
                 onClick={() => {

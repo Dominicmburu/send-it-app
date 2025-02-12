@@ -69,7 +69,7 @@ const LoginPage: React.FC = () => {
   return (
     <div className="container">
         <div className="form-container">
-        <h2>Login</h2>
+        <h4>Login</h4>
       {error && <p className="error">{error}</p>}
       <form onSubmit={handleLogin}>
         <div className="form-group">
