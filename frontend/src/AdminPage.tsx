@@ -11,7 +11,7 @@ import CreateParcelForm from "./CreateParcelView";
 const AdminDashboard: React.FC = () => {
   const [parcels, setParcels] = useState([]);
   const [error, setError] = useState("");
-  const [showModal, setShowModal] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
   
   const navigate = useNavigate();
 
@@ -37,19 +37,19 @@ const AdminDashboard: React.FC = () => {
     }
   };
 
-  const handleCreateParcel = async () => {
-    try {
-      await axios.post("/api/parcels", {
-        ...newParcel,
-        created_at: new Date(),
-        updated_at: new Date(),
-      });
-      fetchParcels();
-      setShowModal(false);
-    } catch (err) {
-      setError("Failed to create parcel");
-    }
-  };
+  // const handleCreateParcel = async () => {
+  //   try {
+  //     await axios.post("/api/parcels", {
+  //       ...newParcel,
+  //       created_at: new Date(),
+  //       updated_at: new Date(),
+  //     });
+  //     fetchParcels();
+  //     setShowModal(false);
+  //   } catch (err) {
+  //     setError("Failed to create parcel");
+  //   }
+  // };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -57,12 +57,7 @@ const AdminDashboard: React.FC = () => {
     navigate("/login");
   };
 
-  const allParcels = [
-    { id: 1, sender: "John Doe", receiver: "Jane Doe", status: "Pending" },
-
-    { id: 2, sender: "John Doe", receiver: "Jane Doe", status: "Pending" },
-    { id: 3, sender: "Johnson", receiver: "jane", status: "pending" },
-  ];
+  
 
   return (
     <>
@@ -120,5 +115,6 @@ const AdminDashboard: React.FC = () => {
     </>
   );
 };
+
 
 export default AdminDashboard;

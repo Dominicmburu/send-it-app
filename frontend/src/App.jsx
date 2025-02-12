@@ -11,6 +11,8 @@ import LoginPage from "./LoginPage";
 import SignupPage from "./SignupPage";
 import IndexPage from "./IndexPage";
 import AllParcels from "./AllParcels";
+import ParcelDetails from "./ParcelDetails";
+import MapPage from "./MapPage";
 
 const ProtectedRoute = ({ children, role }) => {
   const token = localStorage.getItem("token");
@@ -35,33 +37,51 @@ const App = () => {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<IndexPage />} />
+        <Route path="/signup" element={<SignupPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/user-dashboard" element={<UserDashboard />} />
+        <Route path="/admin-dashboard/parcels" element={<AllParcels />} />
         <Route
-          path="/admin-dashboard/"
+          path="/admin-dashboard/parcels/:parcelId"
+          element={<ParcelDetails />}
+        />
+
+        <Route path="/map"  element={<MapPage/>}/>
+
+        {/* <Route
+          path="/admin-dashboard"
           element={
             <ProtectedRoute role="admin">
               <AdminDashboard />
             </ProtectedRoute>
           }
-        />
-        <Route
+        /> */}
+        {/* <Route
+          path="/admin-dashboard/parcels/:parcelId"
+          element={
+            <ProtectedRoute role="admin">
+              <ParcelDetails />
+            </ProtectedRoute>
+          }/> */}
+
+        {/* <Route
           path="/admin-dashboard/parcels"
           element={
             <ProtectedRoute role="admin">
               <AllParcels/>
             </ProtectedRoute>
           }
-        />
-        <Route
+        /> */}
+        {/* <Route
           path="/user-dashboard"
           element={
             <ProtectedRoute role="user">
               <UserDashboard />
             </ProtectedRoute>
           }
-        />
-        <Route path="/" element={<IndexPage />} />
-        <Route path="/signup" element={<SignupPage />} />
+        /> */}
       </Routes>
     </Router>
   );

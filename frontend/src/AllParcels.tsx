@@ -2,40 +2,60 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
+import { CiNoWaitingSign } from "react-icons/ci";
 
-const AllParcels:React.FC = () => {
-    const [error,setError]= useState('')
-    const [allParcels, setAllParcels] = useState([]); 
+const AllParcels: React.FC = () => {
+  const [error, setError] = useState("");
+  const [allParcels, setAllParcels] = useState([]);
 
+  // fetch all parcels
+  const fetchParcels = async () => {
+    try {
+      const response = await axios.get("/api/parcels");
+      setAllParcels(response.data);
+    } catch (err) {
+      setError("Failed to fetch parcels");
+    }
+  };
 
-    // fetch all parcels
-    const fetchParcels = async () => {
-        try {
-          const response = await axios.get("/api/parcels");
-          setAllParcels(response.data);
-        } catch (err) {
-          setError("Failed to fetch parcels");
-        }
-      };
+  //Update parcel status
+  const updateParcelStatus = async (id: string, status: string) => {
+    try {
+      await axios.patch(`/api/parcels/${id}/status`, { status });
+      fetchParcels();
+    } catch (err) {
+      setError("Failed to update parcel status");
+    }
+  };
 
-      //Update parcel status
-      const updateParcelStatus = async (id: string, status: string) => {
-        try {
-          await axios.patch(`/api/parcels/${id}/status`, { status });
-          fetchParcels();
-        } catch (err) {
-          setError("Failed to update parcel status");
-        }
-      };
+  const parcels = [
+    { id: 1, sender: "John Doe", receiver: "Jane Doe", status: "Pending" },
+
+    { id: 2, sender: "John Doe", receiver: "Jane Doe", status: "Pending" },
+    { id: 3, sender: "Johnson", receiver: "jane", status: "pending" },
+  ];
 
   return (
     <>
       {/* Display parcels */}
       <div className="container">
-
-
-<Link to="/admin-dashboard" className="back-link"><IoIosArrowBack /> Back to Dashboard</Link>
+        <Link to="/admin-dashboard" className="back-link">
+          <IoIosArrowBack /> Back to Dashboard
+        </Link>
         {error && <p className="error-message">{error}</p>}
+
+        <div className="parcel-overview">
+          <div className="phone-address">
+                          <p>Parcel ID: 334020934</p>
+                          <div className="status">
+                            <CiNoWaitingSign className="pending-icon" />
+                            <p>Pending</p>
+                          </div>
+                        </div>
+                        <div className="sender phone-address">
+                          <p>To: Richard Mark</p>
+                        </div>
+        </div>
 
         <div className="admin-dashboard">
           <table className="parcel-table">
@@ -49,7 +69,7 @@ const AllParcels:React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {allParcels.map((parcel: any) => (
+              {parcels.map((parcel: any) => (
                 <tr key={parcel.id}>
                   <td>{parcel.id}</td>
                   <td>{parcel.sender}</td>
