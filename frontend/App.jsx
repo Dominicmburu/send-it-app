@@ -5,18 +5,18 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import AdminDashboard from "./pages/AdminPage";
-import UserDashboard from "./pages/UserPage";
-import LoginPage from "./pages/LoginPage";
-import SignupPage from "./pages/SignupPage";
-import IndexPage from "./pages/IndexPage";
-import AllParcels from "./pages/AllParcels";
-import ParcelDetails from "./pages/ParcelDetails";
-import MapPage from "./pages/MapPage";
+import AdminDashboard from "./src/pages/AdminPage";
+import UserDashboard from "./src/pages/UserPage";
+import LoginPage from "./src/pages/LoginPage";
+import SignupPage from "./src/pages/SignupPage";
+import IndexPage from "./src/pages/IndexPage";
+import AllParcels from "./src/pages/AllParcels";
+import ParcelDetails from "./src/pages/ParcelDetails";
+import MapPage from "./src/pages/MapPage";
 
 const ProtectedRoute = ({ children, role }) => {
   const token = localStorage.getItem("token");
-  const userRole = localStorage.getItem("role"); // Assuming role is stored in localStorage
+  const userRole = localStorage.getItem("role");
 
   if (!token) {
     return <Navigate to="/login" />;

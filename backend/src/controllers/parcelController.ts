@@ -35,8 +35,6 @@ export const getUserParcels = async (req: Request, res: Response): Promise<void>
     return;
   }
 };
-<<<<<<< HEAD
-=======
 
 export const createParcel = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -72,4 +70,3 @@ export const updateParcelDetails = async (req: Request, res: Response): Promise<
   }
 };
 
->>>>>>> 5befa322306a6ce5631946bdb3a2ba248b8366e2

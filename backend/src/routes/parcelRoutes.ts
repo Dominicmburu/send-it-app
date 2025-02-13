@@ -8,8 +8,6 @@ router.get('/:parcelId', authenticateJWT, parcelController.getParcelDetails);
 
 router.get('/', authenticateJWT, parcelController.getUserParcels);
 
-<<<<<<< HEAD
-=======
 router.post(
     '/',
     authenticateJWT,
@@ -18,5 +16,4 @@ router.post(
 
   router.put('/:parcelId/details', authenticateJWT, parcelController.updateParcelDetails);
 
->>>>>>> 5befa322306a6ce5631946bdb3a2ba248b8366e2
 export default router;
