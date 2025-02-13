@@ -15,24 +15,6 @@ interface TokenPayload {
 }
 
 export const authenticateJWT = (req: Request, res: Response, next: NextFunction):void => {
-<<<<<<< HEAD
-  const authHeader = req.headers.authorization;
-  if (authHeader && authHeader.startsWith('Bearer ')) {
-    const token = authHeader.split(' ')[1];
-    jwt.verify(token, JWT_SECRET as string, (err, decoded) => {
-      if (err) {
-        res.status(401).json({ message: 'Invalid token.' });
-        return;
-      }
-      req.user = decoded as TokenPayload;
-      next();
-    });
-  } else {
-    res.status(401).json({ message: 'No token provided.' });
-    return;
-  }
-};
-=======
   let token: string | undefined;
 
   const authHeader = req.headers.authorization;
@@ -64,4 +46,3 @@ export const authenticateJWT = (req: Request, res: Response, next: NextFunction)
     next();
   });
 };
->>>>>>> 5befa322306a6ce5631946bdb3a2ba248b8366e2
