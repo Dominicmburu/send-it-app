@@ -5,12 +5,17 @@ interface CreateParcelInput {
   receiver_id: number;
   pickup_location: string;
   destination: string;
+<<<<<<< HEAD
+=======
   updated_by: number;
+>>>>>>> 5befa322306a6ce5631946bdb3a2ba248b8366e2
 }
 
 interface UpdateParcelStatusInput {
   parcel_id: number;
   status: string;
+<<<<<<< HEAD
+=======
   updated_by: number;
 }
 
@@ -19,6 +24,7 @@ export interface UpdateParcelDetailsInput {
   pickup_location: string;
   destination: string;
   updated_by: number;
+>>>>>>> 5befa322306a6ce5631946bdb3a2ba248b8366e2
 }
 
 
@@ -58,18 +64,30 @@ export const createParcelService = async ({
   receiver_id,
   pickup_location,
   destination,
+<<<<<<< HEAD
+}: CreateParcelInput): Promise<void> => {
+  await poolConnect;
+  const request = pool.request();
+  request.input('p_parcel_id', sql.Int, null); // New parcel: no ID
+=======
   updated_by
 }: CreateParcelInput): Promise<void> => {
   await poolConnect;
   const request = pool.request();
   request.input('p_parcel_id', sql.Int, null); 
+>>>>>>> 5befa322306a6ce5631946bdb3a2ba248b8366e2
   request.input('p_sender_id', sql.Int, sender_id);
   request.input('p_receiver_id', sql.Int, receiver_id);
   request.input('p_pickup_location', sql.VarChar(255), pickup_location);
   request.input('p_destination', sql.VarChar(255), destination);
+<<<<<<< HEAD
+  request.input('p_status', sql.VarChar(20), 'pending');  // Default status
+  request.input('p_action', sql.VarChar(20), 'INSERT');
+=======
   request.input('p_status', sql.VarChar(20), 'pending');  
   request.input('p_action', sql.VarChar(20), 'INSERT');
   request.input('p_updated_by', sql.Int, updated_by);
+>>>>>>> 5befa322306a6ce5631946bdb3a2ba248b8366e2
   await request.execute('sp_manageParcel');
 };
 
@@ -77,17 +95,30 @@ export const createParcelService = async ({
 export const updateParcelStatusService = async ({
   parcel_id,
   status,
+<<<<<<< HEAD
+=======
   updated_by,
+>>>>>>> 5befa322306a6ce5631946bdb3a2ba248b8366e2
 }: UpdateParcelStatusInput): Promise<any> => {
   await poolConnect;
   const request = pool.request();
   request.input('p_parcel_id', sql.Int, parcel_id);
+<<<<<<< HEAD
+  // For the unused parameters, pass null
+=======
+>>>>>>> 5befa322306a6ce5631946bdb3a2ba248b8366e2
   request.input('p_sender_id', sql.Int, null);
   request.input('p_receiver_id', sql.Int, null);
   request.input('p_pickup_location', sql.VarChar(255), null);
   request.input('p_destination', sql.VarChar(255), null);
   request.input('p_status', sql.VarChar(20), status);
   request.input('p_action', sql.VarChar(20), 'UPDATE_STATUS');
+<<<<<<< HEAD
+  const result = await request.execute('sp_manageParcel');
+  // Assuming the stored procedure returns the updated parcel as the first row of the recordset.
+  return result.recordset[0];
+};
+=======
   request.input('p_updated_by', sql.Int, updated_by);
 
   const result = await request.execute('sp_manageParcel');
@@ -142,3 +173,4 @@ export const getAllParcelsService = async (): Promise<any[]> => {
   const result = await request.execute('sp_getAllParcels');
   return result.recordset;
 };
+>>>>>>> 5befa322306a6ce5631946bdb3a2ba248b8366e2

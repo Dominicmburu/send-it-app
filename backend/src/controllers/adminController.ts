@@ -6,6 +6,9 @@ import * as notificationService from '../services/notification';
 export const createParcel = async (req: Request, res: Response): Promise<void> => {
   try {
     const { sender_id, receiver_id, pickup_location, destination } = req.body;
+<<<<<<< HEAD
+    await parcelService.createParcelService({ sender_id, receiver_id, pickup_location, destination });
+=======
 
     const updated_by = req.user?.user_id;
 
@@ -15,6 +18,7 @@ export const createParcel = async (req: Request, res: Response): Promise<void> =
     }
 
     await parcelService.createParcelService({ sender_id, receiver_id, pickup_location, destination, updated_by });
+>>>>>>> 5befa322306a6ce5631946bdb3a2ba248b8366e2
     res.status(201).json({ message: 'Parcel delivery order created successfully.' });
     return;
   } catch (error: any) {
@@ -28,6 +32,9 @@ export const createParcel = async (req: Request, res: Response): Promise<void> =
 export const updateParcelStatus = async (req: Request, res: Response): Promise<void> => {
   try {
     const { parcel_id, status } = req.body;
+<<<<<<< HEAD
+    const updatedParcel = await parcelService.updateParcelStatusService({ parcel_id, status });
+=======
 
     const updated_by = req.user?.user_id;
     if (!updated_by) {
@@ -36,6 +43,7 @@ export const updateParcelStatus = async (req: Request, res: Response): Promise<v
     }
 
     const updatedParcel = await parcelService.updateParcelStatusService({ parcel_id, status, updated_by });
+>>>>>>> 5befa322306a6ce5631946bdb3a2ba248b8366e2
     
     if (updatedParcel && updatedParcel.receiver_email) {
       await notificationService.sendNotification(
@@ -53,6 +61,8 @@ export const updateParcelStatus = async (req: Request, res: Response): Promise<v
     return;
   }
 };
+<<<<<<< HEAD
+=======
 
 export const updateParcelDetails = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -103,3 +113,4 @@ export const getAllParcels = async (req: Request, res: Response): Promise<void> 
     res.status(500).json({ message: error.message || 'Failed to retrieve parcels.' });
   }
 };
+>>>>>>> 5befa322306a6ce5631946bdb3a2ba248b8366e2
