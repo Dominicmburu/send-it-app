@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import authRoutes from './routes/authRoutes';
 import userRoutes from './routes/userRoutes';
@@ -10,6 +11,15 @@ import { errorHandler } from './middlewares/errorMiddleware';
 dotenv.config();
 
 const app = express();
+
+app.use(
+    cors({
+        origin: '*',
+        credentials: true,
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        allowedHeaders: ['Content-Type', 'Authorization'],
+    })
+);
 
 app.use(express.json());
 app.use(cookieParser());

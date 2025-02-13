@@ -9,5 +9,6 @@ const router = Router();
 router.get('/profile', authenticateJWT, userController.getProfile);
 
 router.put('/profile', authenticateJWT, validateRequest(updateUserSchema), userController.updateProfile);
+router.get('/all', authenticateJWT, userController.getAllUsers);
 
 export default router;
