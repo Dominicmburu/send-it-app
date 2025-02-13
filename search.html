@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      input {
+        padding: 8px;
+        width: 200px;
+        border: 2px solid #3498db;
+        border-radius: 5px;
+      }
+
+      button {
+        padding: 8px 12px;
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      input {
+        padding: 8px;
+        width: 250px;
+        border: 2px solid #3498db;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin-top: 10px;
+      }
+
+      li {
+        padding: 5px;
+        font-size: 18px;
+      }
+
+      .highlight {
+        font-weight: bold;
+        color: #e74c3c;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="text" id="searchInput" placeholder="Search for a book..." />
+    <button onclick="searchBooks()">Search</button>
+    <ul id="results"></ul>
+
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="Search for a book..."
+      onkeyup="searchBooks()"
+    />
+    <ul id="results"></ul>
+
+    <script>
+      // Sample book data
+      const books = [
+        "Harry Potter",
+        "The Hobbit",
+        "Percy Jackson",
+        "The Lion King",
+      ];
+
+      // Function to search a book
+      function searchBooks() {
+        // get the input
+        const input = document
+          .getElementById("searchInput")
+          .value.toLowerCase();
+        const resultsList = document.getElementById("results");
+
+        // Clear previous results
+        resultsList.innerHTML = "";
+
+        // filter books that match the search
+        let filteredBooks = books.filter((book) =>
+          book.toLowerCase().includes(input)
+        );
+
+        // check for no match found
+        if(filteredBooks.length === 0){
+            resultsList.innerHTML = "<li>No results found</li>"
+            return;
+        }
+
+        // Show results
+        filteredBooks.forEach((book) => {
+          let listItem = document.createElement("li");
+          listItem.textContent = book;
+          // append the list to the ul container
+          resultsList.appendChild(listItem);
+        });
+      }
+    </script>
+  </body>
+</html>
