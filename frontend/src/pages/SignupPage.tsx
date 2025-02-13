@@ -6,7 +6,7 @@ const SignupPage: React.FC = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [phone, setPhone] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -18,35 +18,21 @@ const SignupPage: React.FC = () => {
     }
   }, [error]);
 
-  const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
-    if (!username || !email || !password || !phone || !address) {
-      setError("All fields are required.");
-      return;
-    }
-
-    if (!validateEmail(email)) {
-      setError("Please enter a valid email address.");
-      return;
-    }
-
     try {
-      await axios.post("/api/auth/signup", {
+      await axios.post("http://127.0.0.1:5000/api/auth/register", {
         username,
         email,
         password,
-        phone,
+        phone_number: phoneNumber,
         address,
       });
       console.log("Signup successful");
       navigate("/login");
+
     } catch (err) {
       setError("Signup failed. Please try again.");
     }
@@ -93,8 +79,8 @@ const SignupPage: React.FC = () => {
           <label className="">Phone Number</label>
           <input
             type="tel"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
             placeholder="Phone number"
             
           />

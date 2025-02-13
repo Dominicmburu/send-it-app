@@ -42,3 +42,20 @@ export const updateProfile = async (req: CustomRequest, res: Response): Promise<
     return;
   }
 };
+
+export const getAllUsers = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const users: IUser[] = await userService.getAllUsers();   
+
+    const filteredUsers = users.map((user: IUser) => ({
+      user_id: user.user_id,
+      username: user.username,
+      email: user.email,
+    }));
+
+    res.status(200).json({ users: filteredUsers });
+  } catch (error: any) {
+    console.error("Get all users error:", error);
+    res.status(500).json({ message: error.message || 'Failed to retrieve users.' });
+  }
+};

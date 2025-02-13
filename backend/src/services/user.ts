@@ -51,3 +51,15 @@ export const updateUserProfile = async ({
   request.input('p_action', sql.VarChar(10), 'UPDATE');
   await request.execute('sp_manageUser');
 };
+
+
+export const getAllUsers = async (): Promise<any[]> => {
+  await poolConnect;
+  const request = pool.request();
+  const result = await request.execute('sp_getAllUsers');
+  return result.recordset.map((user: any) => ({
+    user_id: user.user_id,
+    username: user.username,
+    email: user.email,
+  }));
+};
