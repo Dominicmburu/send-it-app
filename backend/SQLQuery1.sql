@@ -127,6 +127,7 @@ GO
 
 
 CREATE PROCEDURE sp_manageParcel
+<<<<<<< HEAD
     @p_parcel_id INT,
     @p_sender_id INT,
     @p_receiver_id INT,
@@ -134,27 +135,78 @@ CREATE PROCEDURE sp_manageParcel
     @p_destination VARCHAR(255),
     @p_status VARCHAR(20),
     @p_updated_by INT,
+=======
+    @p_parcel_id INT = NULL,
+    @p_sender_id INT = NULL,
+    @p_receiver_id INT = NULL,
+    @p_pickup_location VARCHAR(255) = NULL,
+    @p_destination VARCHAR(255) = NULL,
+    @p_status VARCHAR(20) = NULL,
+    @p_updated_by INT = NULL,
+>>>>>>> 5befa322306a6ce5631946bdb3a2ba248b8366e2
     @p_action VARCHAR(20)
 AS
 BEGIN
     SET NOCOUNT ON;
 
+<<<<<<< HEAD
     IF (@p_action = 'INSERT')
+=======
+    IF @p_action = 'INSERT'
+>>>>>>> 5befa322306a6ce5631946bdb3a2ba248b8366e2
     BEGIN
         INSERT INTO parcels (sender_id, receiver_id, pickup_location, destination, status, created_at, updated_at)
         VALUES (@p_sender_id, @p_receiver_id, @p_pickup_location, @p_destination, @p_status, GETDATE(), GETDATE());
     END
+<<<<<<< HEAD
     ELSE IF (@p_action = 'UPDATE_STATUS')
+=======
+    ELSE IF @p_action = 'UPDATE_STATUS'
+>>>>>>> 5befa322306a6ce5631946bdb3a2ba248b8366e2
     BEGIN
         UPDATE parcels 
         SET status = @p_status,
             updated_at = GETDATE()
         WHERE parcel_id = @p_parcel_id AND deleted_at IS NULL;
         
+<<<<<<< HEAD
         -- Record the update in parcel_updates
         INSERT INTO parcel_updates (parcel_id, status, updated_by, update_message, updated_at)
         VALUES (@p_parcel_id, @p_status, @p_updated_by, 'Status updated to ' + @p_status, GETDATE());
     END
+=======
+        -- Ensure we do not insert NULL status into parcel_updates
+        INSERT INTO parcel_updates (parcel_id, status, updated_by, update_message, updated_at)
+        VALUES (@p_parcel_id, @p_status, @p_updated_by, 'Status updated to ' + @p_status, GETDATE());
+    END
+    ELSE IF @p_action = 'UPDATE_DETAILS'
+    BEGIN
+        -- Get the current status of the parcel
+        DECLARE @current_status VARCHAR(20);
+        SELECT @current_status = status FROM parcels WHERE parcel_id = @p_parcel_id;
+
+        UPDATE parcels
+        SET pickup_location = @p_pickup_location,
+            destination = @p_destination,
+            updated_at = GETDATE()
+        WHERE parcel_id = @p_parcel_id AND deleted_at IS NULL;
+        
+        -- Ensure we log an update with the correct status
+        INSERT INTO parcel_updates (parcel_id, status, updated_by, update_message, updated_at)
+        VALUES (@p_parcel_id, @current_status, @p_updated_by, 'Parcel details updated', GETDATE());
+    END
+    ELSE IF @p_action = 'DELETE'
+    BEGIN
+        UPDATE parcels
+        SET deleted_at = GETDATE(),
+            updated_at = GETDATE()
+        WHERE parcel_id = @p_parcel_id AND deleted_at IS NULL;
+    END
+    ELSE
+    BEGIN
+        RAISERROR('Invalid action specified', 16, 1);
+    END
+>>>>>>> 5befa322306a6ce5631946bdb3a2ba248b8366e2
 END
 GO
 
@@ -209,6 +261,20 @@ END
 GO
 
 
+<<<<<<< HEAD
+=======
+CREATE PROCEDURE sp_getAllParcels
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT * FROM parcels 
+    WHERE deleted_at IS NULL;
+END
+GO
+
+
+
+>>>>>>> 5befa322306a6ce5631946bdb3a2ba248b8366e2
 
 
 

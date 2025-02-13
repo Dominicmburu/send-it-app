@@ -11,13 +11,21 @@ const config: sql.config = {
   options: {
     encrypt: false,
     trustServerCertificate: true,
+<<<<<<< HEAD
     instanceName: process.env.DB_INSTANCE || 'SQLEXPRESS',
+=======
+    // instanceName: process.env.DB_INSTANCE || 'SQLEXPRESS',
+>>>>>>> 5befa322306a6ce5631946bdb3a2ba248b8366e2
   },
   pool: {
     max: 10,
     min: 0,
     idleTimeoutMillis: 30000,
+<<<<<<< HEAD
   },
+=======
+  }
+>>>>>>> 5befa322306a6ce5631946bdb3a2ba248b8366e2
 };
 
 const pool = new sql.ConnectionPool(config);

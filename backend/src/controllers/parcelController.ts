@@ -35,3 +35,41 @@ export const getUserParcels = async (req: Request, res: Response): Promise<void>
     return;
   }
 };
+<<<<<<< HEAD
+=======
+
+export const createParcel = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const user_id = req.user?.user_id;
+    if (!user_id) {
+      res.status(401).json({ message: 'Unauthorized.' });
+      return;
+    }
+    const { receiver_id, pickup_location, destination } = req.body;
+    const updated_by = user_id;
+    await parcelService.createParcelService({ sender_id: user_id, receiver_id, pickup_location, destination, updated_by });
+    res.status(201).json({ message: 'Parcel delivery order created successfully.' });
+  } catch (error: any) {
+    console.error("User create parcel error:", error);
+    res.status(500).json({ message: error.message || 'Failed to create parcel.' });
+  }
+};
+
+export const updateParcelDetails = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const user_id = req.user?.user_id;
+    if (!user_id) {
+      res.status(401).json({ message: 'Unauthorized.' });
+      return;
+    }
+    const { parcel_id, pickup_location, destination } = req.body;
+    const updated_by = user_id;
+    const updatedParcel = await parcelService.updateParcelDetailsService({ parcel_id, pickup_location, destination, updated_by });
+    res.status(200).json({ message: 'Parcel details updated successfully.', parcel: updatedParcel });
+  } catch (error: any) {
+    console.error("User update parcel details error:", error);
+    res.status(500).json({ message: error.message || 'Failed to update parcel details.' });
+  }
+};
+
+>>>>>>> 5befa322306a6ce5631946bdb3a2ba248b8366e2

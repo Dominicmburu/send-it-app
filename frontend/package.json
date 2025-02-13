@@ -22,7 +22,10 @@
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
     "@vitejs/plugin-react": "^4.3.4",
+<<<<<<< HEAD
     "cypress": "^14.0.3",
+=======
+>>>>>>> 5befa322306a6ce5631946bdb3a2ba248b8366e2
     "eslint": "^9.19.0",
     "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-react-hooks": "^5.0.0",

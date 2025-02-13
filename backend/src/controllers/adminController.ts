@@ -6,7 +6,19 @@ import * as notificationService from '../services/notification';
 export const createParcel = async (req: Request, res: Response): Promise<void> => {
   try {
     const { sender_id, receiver_id, pickup_location, destination } = req.body;
+<<<<<<< HEAD
     await parcelService.createParcelService({ sender_id, receiver_id, pickup_location, destination });
+=======
+
+    const updated_by = req.user?.user_id;
+
+    if (!updated_by) {
+      res.status(401).json({ message: 'Unauthorized' });
+      return;
+    }
+
+    await parcelService.createParcelService({ sender_id, receiver_id, pickup_location, destination, updated_by });
+>>>>>>> 5befa322306a6ce5631946bdb3a2ba248b8366e2
     res.status(201).json({ message: 'Parcel delivery order created successfully.' });
     return;
   } catch (error: any) {
@@ -20,7 +32,18 @@ export const createParcel = async (req: Request, res: Response): Promise<void> =
 export const updateParcelStatus = async (req: Request, res: Response): Promise<void> => {
   try {
     const { parcel_id, status } = req.body;
+<<<<<<< HEAD
     const updatedParcel = await parcelService.updateParcelStatusService({ parcel_id, status });
+=======
+
+    const updated_by = req.user?.user_id;
+    if (!updated_by) {
+      res.status(401).json({ message: 'Unauthorized' });
+      return;
+    }
+
+    const updatedParcel = await parcelService.updateParcelStatusService({ parcel_id, status, updated_by });
+>>>>>>> 5befa322306a6ce5631946bdb3a2ba248b8366e2
     
     if (updatedParcel && updatedParcel.receiver_email) {
       await notificationService.sendNotification(
@@ -38,3 +61,56 @@ export const updateParcelStatus = async (req: Request, res: Response): Promise<v
     return;
   }
 };
+<<<<<<< HEAD
+=======
+
+export const updateParcelDetails = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { parcel_id, pickup_location, destination } = req.body;
+
+    const updated_by = req.user?.user_id;
+    if (!updated_by) {
+      res.status(401).json({ message: 'Unauthorized' });
+      return;
+    }
+
+    const updatedParcel = await parcelService.updateParcelDetailsService({ parcel_id, pickup_location, destination, updated_by });
+    res.status(200).json({ message: 'Parcel details updated successfully.', parcel: updatedParcel });
+  } catch (error: any) {
+    console.error("Update parcel details error:", error);
+    res.status(500).json({ message: error.message || 'Failed to update parcel details.' });
+  }
+};
+
+export const deleteParcel = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const parcel_id = Number(req.params.id);
+    if (isNaN(parcel_id)) {
+      res.status(400).json({ message: 'Invalid parcel id.' });
+      return;
+    }
+
+    const updated_by = req.user?.user_id;
+    if (!updated_by) {
+      res.status(401).json({ message: 'Unauthorized' });
+      return;
+    }
+
+    await parcelService.deleteParcelService(parcel_id, updated_by);
+    res.status(200).json({ message: 'Parcel deleted successfully.' });
+  } catch (error: any) {
+    console.error("Delete parcel error:", error);
+    res.status(500).json({ message: error.message || 'Failed to delete parcel.' });
+  }
+};
+
+export const getAllParcels = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const parcels = await parcelService.getAllParcelsService();
+    res.status(200).json({ parcels });
+  } catch (error: any) {
+    console.error("Get all parcels error:", error);
+    res.status(500).json({ message: error.message || 'Failed to retrieve parcels.' });
+  }
+};
+>>>>>>> 5befa322306a6ce5631946bdb3a2ba248b8366e2

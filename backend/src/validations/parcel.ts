@@ -33,3 +33,21 @@ export const updateParcelStatusSchema = Joi.object({
       'any.required': 'Status is required',
     }),
 });
+<<<<<<< HEAD
+=======
+
+export const updateParcelDetailsSchema = Joi.object({
+  parcel_id: Joi.number().integer().required().messages({
+    'number.base': 'Parcel ID must be a number',
+    'any.required': 'Parcel ID is required',
+  }),
+  pickup_location: Joi.string().required().messages({
+    'string.base': 'Pickup location must be a string',
+    'any.required': 'Pickup location is required',
+  }),
+  destination: Joi.string().required().messages({
+    'string.base': 'Destination must be a string',
+    'any.required': 'Destination is required',
+  }),
+});
+>>>>>>> 5befa322306a6ce5631946bdb3a2ba248b8366e2
