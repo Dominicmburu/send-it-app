@@ -13,6 +13,7 @@ import IndexPage from "./src/pages/IndexPage";
 import AllParcels from "./src/pages/AllParcels";
 import ParcelDetails from "./src/pages/ParcelDetails";
 import MapPage from "./src/pages/MapPage";
+import SuccessPage from "./src/pages/SuccessPage";
 
 const ProtectedRoute = ({ children, role }) => {
   const token = localStorage.getItem("token");
@@ -43,12 +44,11 @@ const App = () => {
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/user-dashboard" element={<UserDashboard />} />
         <Route path="/admin-dashboard/parcels" element={<AllParcels />} />
+        <Route path="/success" element={<SuccessPage />} />
         <Route
           path="/admin-dashboard/parcels/:parcelId"
           element={<ParcelDetails />}
         />
-
-
         <Route path="/map"  element={<MapPage/>}/>
 
         {/* <Route

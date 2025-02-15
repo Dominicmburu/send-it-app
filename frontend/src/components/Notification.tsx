@@ -1,4 +1,5 @@
 import React from "react";
+
 const Notification: React.FC = () => {
   return (
     <div
@@ -12,14 +13,25 @@ const Notification: React.FC = () => {
         width: "200px",
         borderRadius: "0.125rem",
         height: "auto",
-        zIndex:'10px'
+        zIndex: "10",
       }}
     >
-        <div style={{backgroundColor:'var(--primary-color)',
-             color:'whitesmoke', height:'1.5rem', width:'1.5rem',
-             borderRadius:'50%', display:'grid', placeContent:'center'}}>x</div>
+      <div
+        style={{
+          backgroundColor: "var(--primary-color)",
+          color: "whitesmoke",
+          height: "1.5rem",
+          width: "1.5rem",
+          borderRadius: "50%",
+          display: "grid",
+          placeContent: "center",
+        }}
+      >
+        x
+      </div>
       <p>You have a new message</p>
     </div>
   );
 };
+
 export default Notification;

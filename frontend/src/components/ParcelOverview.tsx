@@ -7,14 +7,24 @@ interface ParcelOverviewProps {
   id: number;
   sender: string;
   receiver: string;
+  pickup_location: string;
+  destination: string;
   parcel_status: string;
+  onUpdateStatus: (id: number) => void;
+  onUpdateDetails: (id: number) => void;
+  onDelete: (id: number) => void;
 }
 
 const ParcelOverview: React.FC<ParcelOverviewProps> = ({
   id,
   sender,
   receiver,
+  pickup_location,
+  destination,
   parcel_status,
+  onUpdateStatus,
+  onUpdateDetails,
+  onDelete,
 }) => {
   return (
     <div className="parcel-overview">
@@ -25,32 +35,42 @@ const ParcelOverview: React.FC<ParcelOverviewProps> = ({
           display: "flex",
           flexDirection: "column",
           gap: "1rem",
+          textDecoration: "none",
         }}
       >
-        <div className="phone-address">
+        <div className="parcel-details">
           <p>
-            Parcel ID: <strong className="pl">{id}</strong>
+            <strong>Parcel ID:</strong> {id}
+          </p>
+          <p>
+            <strong>Pickup Location:</strong> {pickup_location}
+          </p>
+          <p>
+            <strong>Destination:</strong> {destination}
           </p>
           <div className="status">
-            {parcel_status == "Pending" ? (
+            {parcel_status === "Pending" ? (
               <CiNoWaitingSign className="pending-icon" />
             ) : (
               <FaClipboardCheck className="delivered-icon" />
             )}
-
-            <p>{parcel_status}</p>
+            <span>{parcel_status}</span>
           </div>
-        </div>
-        <div className="phone-address">
           <p>
-            To: <strong className="pl">{receiver}</strong>
+            <strong>Sender:</strong> {sender}
           </p>
           <p>
-            From: <strong className="pl">{sender}</strong>
+            <strong>Receiver:</strong> {receiver}
           </p>
         </div>
       </Link>
+      <div className="parcel-actions">
+        <button onClick={() => onUpdateStatus(id)}>Update Status</button>
+        <button onClick={() => onUpdateDetails(id)}>Update Details</button>
+        <button onClick={() => onDelete(id)}>Delete Parcel</button>
+      </div>
     </div>
   );
 };
+
 export default ParcelOverview;
