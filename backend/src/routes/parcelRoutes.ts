@@ -16,4 +16,7 @@ router.post(
 
   router.put('/:parcelId/details', authenticateJWT, parcelController.updateParcelDetails);
 
+  router.post('/confirm', authenticateJWT, parcelController.confirmParcel);
+
+
 export default router;
