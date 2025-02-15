@@ -20,6 +20,7 @@ const CreateParcelForm: React.FC = () => {
         className="parcel-form"
       >
         <input
+        data-cy='parcel-id'
           type="text"
           placeholder="Parcel ID"
           onChange={(e) =>
@@ -28,6 +29,7 @@ const CreateParcelForm: React.FC = () => {
         />
 
         <input
+        data-cy='sender'
           type="number"
           placeholder="Sender ID"
           onChange={(e) =>
@@ -35,6 +37,7 @@ const CreateParcelForm: React.FC = () => {
           }
         />
         <input
+        data-cy='receiver'
           type="number"
           placeholder="Receiver ID"
           onChange={(e) =>
@@ -45,6 +48,7 @@ const CreateParcelForm: React.FC = () => {
           }
         />
         <input
+        data-cy='pickup-location'
           type="text"
           placeholder="Pickup Location"
           onChange={(e) =>
@@ -55,6 +59,7 @@ const CreateParcelForm: React.FC = () => {
           }
         />
         <input
+        data-cy='destination'
           type="text"
           placeholder="Destination"
           onChange={(e) =>
@@ -65,6 +70,7 @@ const CreateParcelForm: React.FC = () => {
           }
         />
         <select
+        data-cy='status'
           onChange={(e) =>
             setNewParcel({ ...newParcel, status: e.target.value })
           }
@@ -75,7 +81,7 @@ const CreateParcelForm: React.FC = () => {
           <option value="cancelled">Cancelled</option>
         </select>
         <div>
-          <button onClick={handleCreateParcel} className="btn btn-primary">
+          <button onClick={handleCreateParcel} className="btn btn-primary" data-cy='create-parcel-btn'>
             Create Parcel
           </button>
         </div>

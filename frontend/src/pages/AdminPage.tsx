@@ -83,11 +83,15 @@ const AdminDashboard: React.FC = () => {
                 <br />
                 <strong> Admin</strong>
               </p>
-              <div className="notification" 
-              onClick={()=>{setShowNotification(true)}}>
+              <div
+                className="notification"
+                onClick={() => {
+                  setShowNotification(true);
+                }}
+              >
                 <IoIosNotifications className="theme" />
               </div>
-                {showNotification && (<Notification/>)}
+              {showNotification && <Notification />}
               <button
                 className="btn"
                 onClick={() => {
@@ -105,8 +109,9 @@ const AdminDashboard: React.FC = () => {
         <div className="container">
           <div className="create-parcel-container">
             {/* Link to view all parcels */}
-            <div style={{ width:'200px'}}>
+            <div style={{ width: "200px" }}>
               <Link
+              data-cy='view-all-parcels'
                 to="/admin-dashboard/parcels"
                 className="back-link"
                 style={{ marginTop: "5rem", marginBottom: "2rem" }}
@@ -115,11 +120,10 @@ const AdminDashboard: React.FC = () => {
                 View all parcels
               </Link>
             </div>
-            <div style={{width:'100%'}}>
+            <div style={{ width: "100%" }}>
               {/* Form to create a parcel */}
-              <h4 style={{paddingBottom:'1rem'}}>Create a parcel</h4>
+              <h4 style={{ paddingBottom: "1rem" }}>Create a parcel</h4>
               {error && <p className="error">{error}</p>}
-
               <CreateParcelForm />
             </div>
           </div>
