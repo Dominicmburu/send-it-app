@@ -32,16 +32,12 @@ export const authenticateJWT = (req: Request, res: Response, next: NextFunction)
     return;
   }
 
-  console.log(token);
-  
-  
   jwt.verify(token, JWT_SECRET as string, (err, decoded) => {
     if (err) {
       console.error("Verification error:", err);
       res.status(401).json({ message: 'Invalid token.' });
       return;
     }
-    console.log("Decoded token payload:", decoded);
     req.user = decoded as TokenPayload;
     next();
   });
