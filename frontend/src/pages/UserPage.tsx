@@ -20,6 +20,20 @@ interface Parcel {
   status: string;
 }
 
+const allowedLocations = [
+  "nairobi",
+  "nyeri",
+  "kisumu",
+  "kiambu",
+  "narok",
+  "nanyuki",
+  "meru",
+  "kakamega",
+  "mombasa",
+  "thika",
+  "nakuru",
+];
+
 const UserPage: React.FC = () => {
   const [parcels, setParcels] = useState<{
     sentParcels: Parcel[];
@@ -35,7 +49,14 @@ const UserPage: React.FC = () => {
     receiver_id: "",
     pickup_location: "",
     destination: "",
+    couponCode: ""
   });
+
+  // const [paymentInfo, setPaymentInfo] = useState<{
+  //   clientSecret: string;
+  //   calculatedAmount: number;
+  //   distance: string;
+  // } | null>(null);
 
   useEffect(() => {
     fetchParcels();
@@ -75,17 +96,29 @@ const UserPage: React.FC = () => {
   const handleCreateParcel = async () => {
     try {
       const token = localStorage.getItem("token");
-      await axios.post(
+      console.log("Creating parcel with:", newParcel);
+      const response = await axios.post(
         "http://localhost:5000/api/parcels",
         { ...newParcel },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      fetchParcels();
-      setShowModal(false);
-    } catch (err) {
-      setError("Failed to create parcel");
+
+      if (response.data.message === "Redirect to Stripe Checkout") {
+        window.location.href = response.data.checkoutUrl;
+        return;
+      } else if (
+        response.data.message ===
+        "Parcel delivery order created successfully after payment."
+      ) {
+        alert("Parcel created successfully!");
+        fetchParcels();
+        setShowModal(false);
+      }
+    } catch (err: any) {
+      console.error("Error creating parcel:", err.response?.data || err.message);
+      setError(err.response?.data?.message || "Failed to create parcel");
     }
   };
 
@@ -208,6 +241,7 @@ const UserPage: React.FC = () => {
                       receiver_id: e.target.value,
                     })
                   }
+                  value={newParcel.receiver_id}
                 >
                   <option value="">Select Receiver</option>
                   {users.map((user) => (
@@ -217,23 +251,52 @@ const UserPage: React.FC = () => {
                   ))}
                 </select>
 
-                <input
-                  type="text"
-                  placeholder="Pickup Location"
+                <select
                   onChange={(e) =>
                     setNewParcel({
                       ...newParcel,
                       pickup_location: e.target.value,
                     })
                   }
-                />
-                <input
-                  type="text"
-                  placeholder="Destination"
+                  value={newParcel.pickup_location}
+                >
+                  <option value="">Select Pickup Location</option>
+                  {allowedLocations.map((loc) => (
+                    <option key={loc} value={loc}>
+                      {loc.charAt(0).toUpperCase() + loc.slice(1)}
+                    </option>
+                  ))}
+                </select>
+
+                <select
                   onChange={(e) =>
-                    setNewParcel({ ...newParcel, destination: e.target.value })
+                    setNewParcel({
+                      ...newParcel,
+                      destination: e.target.value,
+                    })
                   }
+                  value={newParcel.destination}
+                >
+                  <option value="">Select Destination</option>
+                  {allowedLocations.map((loc) => (
+                    <option key={loc} value={loc}>
+                      {loc.charAt(0).toUpperCase() + loc.slice(1)}
+                    </option>
+                  ))}
+                </select>
+
+<input
+                  type="text"
+                  placeholder="Coupon Code (optional)"
+                  onChange={(e) =>
+                    setNewParcel({
+                      ...newParcel,
+                      couponCode: e.target.value,
+                    })
+                  }
+                  value={newParcel.couponCode}
                 />
+
                 <button
                   onClick={handleCreateParcel}
                   className="create-parcel-button"
@@ -249,6 +312,8 @@ const UserPage: React.FC = () => {
               </div>
             </div>
           )}
+
+          {error && <p className="error">{error}</p>}
         </div>
       </div>
     </>
