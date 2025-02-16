@@ -3,7 +3,8 @@ import { defineConfig } from "cypress";
 export default defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
-      // implement node event listeners here
+      // Event listeners go here
     },
+    baseUrl: "http://localhost:5173/",
   },
 });
