@@ -165,7 +165,7 @@ const AdminDashboard: React.FC = () => {
             </div>
           </div>
 
-          <div className="parcel-list">
+          {/* <div className="parcel-list">
             <h4>All Parcels</h4>
             {parcels.length === 0 ? (
               <p>No parcels found.</p>
@@ -213,7 +213,7 @@ const AdminDashboard: React.FC = () => {
                 </tbody>
               </table>
             )}
-          </div>
+          </div> */}
         </div>
       </div>
     </>

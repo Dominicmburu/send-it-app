@@ -1,7 +1,7 @@
 /// <reference types='Cypress'/>
 describe('Create parcel', ()=>{
     beforeEach(()=>{
-        cy.visit('http://localhost:5174/admin-dashboard')
+        cy.visit('http://localhost:5173/admin-dashboard')
     })
 
     it('Show a link to view all parcels',()=>{

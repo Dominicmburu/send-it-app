@@ -391,7 +391,7 @@ button:active {
   }
 
   .navbar {
-    grid-template-columns: 1fr 3fr 2fr;
+    grid-template-columns: 1fr 3fr;
   }
   .logout {
     justify-content: flex-end;

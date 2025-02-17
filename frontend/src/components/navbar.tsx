@@ -54,10 +54,10 @@ const Navbar: React.FC = () => {
         <div className="admin-logo">
           <img src="./src/images/senditlogo.png" alt="Logo" className="admin-logo-image" />
         </div>
-        <div className="search-input">
+        {/* <div className="search-input">
           <input type="text" placeholder="Search parcels" />
           <CiSearch className="icon" />
-        </div>
+        </div> */}
         <div className="logout">
           <p>
             Welcome,

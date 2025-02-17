@@ -30,29 +30,42 @@ const AllParcels: React.FC = () => {
       const response = await axios.get("http://localhost:5000/api/admin/parcels", {
         headers: { Authorization: `Bearer ${token}` },
       });
+  
+      let parcelsArray: Parcel[] = [];
       if (Array.isArray(response.data)) {
-        setAllParcels(response.data);
+        parcelsArray = response.data;
       } else if (response.data && Array.isArray(response.data.parcels)) {
-        setAllParcels(response.data.parcels);
-      } else {
-        setAllParcels([]);
+        parcelsArray = response.data.parcels;
       }
-      setFilteredParcels(response.data);
+  
+      setAllParcels(parcelsArray);
+      setFilteredParcels(parcelsArray);
     } catch (err) {
       setError("Failed to fetch parcels");
     }
   };
+  
 
   useEffect(() => {
     fetchParcels();
   }, []);
 
   useEffect(() => {
+    // const filtered = allParcels.filter((parcel) =>
+    //   Object.values(parcel).some((value) =>
+    //     value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+    //   )
+    // );
+
+
     const filtered = allParcels.filter((parcel) =>
       Object.values(parcel).some((value) =>
-        value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+        value != null && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
       )
     );
+    
+
+
     setFilteredParcels(filtered);
   }, [searchQuery, allParcels]);
 
@@ -89,9 +102,11 @@ const AllParcels: React.FC = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="search-input"
+            style={{padding:'0.8rem 1rem', outline:'none', border:'1px solid whitesmoke', color:'whitesmoke'}}
           />
           
-          <div className="parcels-container">
+          {/* Display parcels  */}
+          <div className="parcels-container" style={{marginTop:'2rem'}}>
             {currentParcels.length > 0 ? (
               currentParcels.map((parcel: Parcel) => (
                 <ParcelOverview
@@ -112,6 +127,8 @@ const AllParcels: React.FC = () => {
               <p>No parcels found.</p>
             )}
           </div>
+
+          {/* Pagination */}
           <div className="pagination">
             {Array.from({ length: Math.ceil(filteredParcels.length / parcelsPerPage) }, (_, i) => (
               <button key={i + 1} onClick={() => paginate(i + 1)} className={currentPage === i + 1 ? "active" : ""}>
