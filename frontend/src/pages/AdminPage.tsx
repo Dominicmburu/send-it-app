@@ -161,7 +161,7 @@ const AdminDashboard: React.FC = () => {
             <div style={{ width: "100%" }}>
               <h4 style={{ paddingBottom: "1rem" }}>Create a parcel</h4>
               {error && <p className="error">{error}</p>}
-              <CreateParcelForm onParcelCreated={fetchParcels} />
+              <CreateParcelForm onParcelCreated={fetchParcels} data-cy='open-create-parcel-modal'/>
             </div>
           </div>
 

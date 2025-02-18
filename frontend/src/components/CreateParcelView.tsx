@@ -5,7 +5,9 @@ interface CreateParcelFormProps {
   onParcelCreated: () => void;
 }
 
-const CreateParcelForm: React.FC<CreateParcelFormProps> = ({ onParcelCreated }) => {
+const CreateParcelForm: React.FC<CreateParcelFormProps> = ({
+  onParcelCreated,
+}) => {
   const [newParcel, setNewParcel] = useState({
     sender_id: "",
     receiver_id: "",
@@ -42,6 +44,7 @@ const CreateParcelForm: React.FC<CreateParcelFormProps> = ({ onParcelCreated }) 
   return (
     <form className="parcel-form" onSubmit={handleCreateParcel}>
       <input
+        data-cy="parcel-id"
         type="number"
         placeholder="Sender ID"
         value={newParcel.sender_id}
@@ -50,6 +53,7 @@ const CreateParcelForm: React.FC<CreateParcelFormProps> = ({ onParcelCreated }) 
         }
       />
       <input
+        data-cy="receiver"
         type="number"
         placeholder="Receiver ID"
         value={newParcel.receiver_id}
@@ -58,6 +62,7 @@ const CreateParcelForm: React.FC<CreateParcelFormProps> = ({ onParcelCreated }) 
         }
       />
       <input
+      data-cy="pick-up-location"
         type="text"
         placeholder="Pickup Location"
         value={newParcel.pickup_location}
@@ -66,6 +71,7 @@ const CreateParcelForm: React.FC<CreateParcelFormProps> = ({ onParcelCreated }) 
         }
       />
       <input
+      data-cy='destination'
         type="text"
         placeholder="Destination"
         value={newParcel.destination}
@@ -74,10 +80,9 @@ const CreateParcelForm: React.FC<CreateParcelFormProps> = ({ onParcelCreated }) 
         }
       />
       <select
+      data-cy="status"
         value={newParcel.status}
-        onChange={(e) =>
-          setNewParcel({ ...newParcel, status: e.target.value })
-        }
+        onChange={(e) => setNewParcel({ ...newParcel, status: e.target.value })}
       >
         <option value="pending">Pending</option>
         <option value="in transit">In Transit</option>
@@ -85,7 +90,7 @@ const CreateParcelForm: React.FC<CreateParcelFormProps> = ({ onParcelCreated }) 
         <option value="cancelled">Cancelled</option>
       </select>
       {error && <p className="error">{error}</p>}
-      <button type="submit" className="btn btn-primary">
+      <button type="submit" className="btn btn-primary" data-cy="create-parcel-btn">
         Create Parcel
       </button>
     </form>
