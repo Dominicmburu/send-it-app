@@ -23,12 +23,14 @@ const LoginPage: React.FC = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        "http://127.0.0.1:5000/api/auth/login",
         {
           username,
           password,
         }
       );
+
+      
 
       if (response.data.token) {
         const decodedToken: { user_id: string; role: string } = jwtDecode(
@@ -49,13 +51,17 @@ const LoginPage: React.FC = () => {
           navigate("/user-dashboard");
         } else {
           
-          setError("Invalid credentials. Please try again.");
+          setError(response.data.message);
         }
 
       } else {
+        // setError(response.data.message);
+        setError('Invalid credentials. Please try again.')
+
         setError("Invalid credentials. Please try again.");
       }
     } catch (err) {
+
       setError("Invalid credentials. Please try again.");
     }
   };
@@ -64,7 +70,7 @@ const LoginPage: React.FC = () => {
     <div className="container">
       <div className="form-container">
         <h4 data-cy='login-title'>Login</h4>
-        {error && <p className="error">{error}</p>}
+        {error && <p className="error" data-cy='error'>{error}</p>}
         <form onSubmit={handleLogin}>
           <div className="form-group">
             <label>Username</label>
