@@ -150,6 +150,7 @@ const AdminDashboard: React.FC = () => {
           <div className="create-parcel-container">
             <div style={{ width: "200px" }}>
               <Link
+              data-cy='view-all-parcels'
                 to="/admin-dashboard/parcels"
                 className="back-link"
                 style={{ marginTop: "5rem", marginBottom: "2rem" }}
@@ -164,7 +165,7 @@ const AdminDashboard: React.FC = () => {
             </div>
           </div>
 
-          <div className="parcel-list">
+          {/* <div className="parcel-list">
             <h4>All Parcels</h4>
             {parcels.length === 0 ? (
               <p>No parcels found.</p>
@@ -212,7 +213,7 @@ const AdminDashboard: React.FC = () => {
                 </tbody>
               </table>
             )}
-          </div>
+          </div> */}
         </div>
       </div>
     </>

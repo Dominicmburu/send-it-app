@@ -16,44 +16,58 @@ interface Parcel {
 const AllParcels: React.FC = () => {
   const [error, setError] = useState<string>("");
   const [allParcels, setAllParcels] = useState<Parcel[]>([]);
+  const [filteredParcels, setFilteredParcels] = useState<Parcel[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [statusModalOpen, setStatusModalOpen] = useState(false);
   const [selectedParcelId, setSelectedParcelId] = useState<number | null>(null);
   const [newStatus, setNewStatus] = useState<string>("pending");
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const parcelsPerPage = 5;
 
   const fetchParcels = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get(
-        "http://localhost:5000/api/admin/parcels",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const response = await axios.get("http://localhost:5000/api/admin/parcels", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+  
+      let parcelsArray: Parcel[] = [];
       if (Array.isArray(response.data)) {
-        setAllParcels(response.data);
+        parcelsArray = response.data;
       } else if (response.data && Array.isArray(response.data.parcels)) {
-        setAllParcels(response.data.parcels);
-      } else {
-        setAllParcels([]);
+        parcelsArray = response.data.parcels;
       }
+  
+      setAllParcels(parcelsArray);
+      setFilteredParcels(parcelsArray);
     } catch (err) {
       setError("Failed to fetch parcels");
     }
   };
+  
 
-  const updateParcelStatus = async (parcel_id: number, status: string) => {
-    try {
-      const token = localStorage.getItem("token");
-      await axios.put(
-        "http://localhost:5000/api/admin/parcel/status",
-        { parcel_id, status },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      fetchParcels();
-    } catch (err) {
-      setError("Failed to update parcel status");
-    }
-  };
+  useEffect(() => {
+    fetchParcels();
+  }, []);
+
+  useEffect(() => {
+    // const filtered = allParcels.filter((parcel) =>
+    //   Object.values(parcel).some((value) =>
+    //     value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+    //   )
+    // );
+
+
+    const filtered = allParcels.filter((parcel) =>
+      Object.values(parcel).some((value) =>
+        value != null && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    );
+    
+
+
+    setFilteredParcels(filtered);
+  }, [searchQuery, allParcels]);
 
   const handleOpenStatusModal = (parcel_id: number) => {
     setSelectedParcelId(parcel_id);
@@ -61,55 +75,16 @@ const AllParcels: React.FC = () => {
     setStatusModalOpen(true);
   };
 
-  const handleSubmitStatusUpdate = async () => {
-    if (selectedParcelId !== null) {
-      await updateParcelStatus(selectedParcelId, newStatus);
-      setStatusModalOpen(false);
-      setSelectedParcelId(null);
-    }
-  };
-
   const handleCloseStatusModal = () => {
     setStatusModalOpen(false);
     setSelectedParcelId(null);
   };
 
-  const handleUpdateDetails = async (parcel_id: number) => {
-    const newPickup = prompt("Enter new pickup location:");
-    const newDestination = prompt("Enter new destination:");
-    if (!newPickup || !newDestination) return;
-    try {
-      const token = localStorage.getItem("token");
-      await axios.put(
-        "http://localhost:5000/api/admin/parcel/details",
-        { parcel_id, pickup_location: newPickup, destination: newDestination },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      fetchParcels();
-    } catch (err) {
-      setError("Failed to update parcel details");
-    }
-  };
+  const indexOfLastParcel = currentPage * parcelsPerPage;
+  const indexOfFirstParcel = indexOfLastParcel - parcelsPerPage;
+  const currentParcels = filteredParcels.slice(indexOfFirstParcel, indexOfLastParcel);
 
-  const handleDeleteParcel = async (parcel_id: number) => {
-    if (!window.confirm("Are you sure you want to delete this parcel?")) return;
-    try {
-      const token = localStorage.getItem("token");
-      await axios.delete(
-        `http://localhost:5000/api/admin/parcel/${parcel_id}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      fetchParcels();
-    } catch (err) {
-      setError("Failed to delete parcel");
-    }
-  };
-
-  useEffect(() => {
-    fetchParcels();
-  }, []);
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   return (
     <div className="wrapper">
@@ -120,9 +95,20 @@ const AllParcels: React.FC = () => {
           </Link>
           {error && <p className="error-message">{error}</p>}
           <h4 style={{ paddingBlock: "2rem" }}>Recent parcels</h4>
-          <div className="parcels-container">
-            {allParcels.length > 0 ? (
-              allParcels.map((parcel: Parcel) => (
+          
+          <input
+            type="text"
+            placeholder="Search parcels..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="search-input"
+            style={{padding:'0.8rem 1rem', outline:'none', border:'1px solid whitesmoke', color:'whitesmoke'}}
+          />
+          
+          {/* Display parcels  */}
+          <div className="parcels-container" style={{marginTop:'2rem'}}>
+            {currentParcels.length > 0 ? (
+              currentParcels.map((parcel: Parcel) => (
                 <ParcelOverview
                   key={parcel.parcel_id}
                   id={parcel.parcel_id}
@@ -131,21 +117,31 @@ const AllParcels: React.FC = () => {
                   pickup_location={parcel.pickup_location}
                   destination={parcel.destination}
                   parcel_status={parcel.status}
-                  onUpdateStatus={handleOpenStatusModal}
-                  onUpdateDetails={handleUpdateDetails}
-                  onDelete={handleDeleteParcel}
-                />
+                  onUpdateStatus={handleOpenStatusModal} onUpdateDetails={function (id: number): void {
+                    throw new Error("Function not implemented.");
+                  } } onDelete={function (id: number): void {
+                    throw new Error("Function not implemented.");
+                  } }                />
               ))
             ) : (
               <p>No parcels found.</p>
             )}
           </div>
+
+          {/* Pagination */}
+          <div className="pagination">
+            {Array.from({ length: Math.ceil(filteredParcels.length / parcelsPerPage) }, (_, i) => (
+              <button key={i + 1} onClick={() => paginate(i + 1)} className={currentPage === i + 1 ? "active" : ""}>
+                {i + 1}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
       {statusModalOpen && (
-        <div className="modal-overlay" style={modalOverlayStyle}>
-          <div className="modal" style={modalStyle}>
+        <div className="modal-overlay">
+          <div className="modal">
             <h3>Update Parcel Status</h3>
             <select
               value={newStatus}
@@ -157,40 +153,13 @@ const AllParcels: React.FC = () => {
               <option value="cancelled">Cancelled</option>
             </select>
             <div style={{ marginTop: "1rem" }}>
-              <button
-                onClick={handleSubmitStatusUpdate}
-                style={{ marginRight: "0.5rem" }}
-              >
-                Submit
-              </button>
-              <button onClick={handleCloseStatusModal}>Cancel</button>
+              <button onClick={() => setStatusModalOpen(false)}>Close</button>
             </div>
           </div>
         </div>
       )}
     </div>
   );
-};
-
-const modalOverlayStyle: React.CSSProperties = {
-  position: "fixed",
-  top: 0,
-  left: 0,
-  width: "100%",
-  height: "100%",
-  backgroundColor: "rgba(0,0,0,0.5)",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  zIndex: 1000,
-};
-
-const modalStyle: React.CSSProperties = {
-  backgroundColor: "#fff",
-  padding: "2rem",
-  borderRadius: "8px",
-  width: "300px",
-  textAlign: "center",
 };
 
 export default AllParcels;

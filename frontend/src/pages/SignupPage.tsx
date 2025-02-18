@@ -41,8 +41,8 @@ const SignupPage: React.FC = () => {
   return (
     <div className="container">
         <div className="form-container">
-      <h4 className="">Sign Up</h4>
-      {error && <p className="error">{error}</p>}
+      <h4 data-cy='signup-title'>Sign Up</h4>
+      {error && <p className="error" data-cy='error'>{error}</p>}
       <form onSubmit={handleSignup} className="bg-white p-6 rounded-lg shadow-md w-80">
         <div className="form-group">
           <label className="">Username</label>
@@ -51,6 +51,7 @@ const SignupPage: React.FC = () => {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Username"
+            data-cy='username'
             
           />
         </div>
@@ -61,7 +62,7 @@ const SignupPage: React.FC = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
-            
+            data-cy='email'
           />
         </div>
         <div className='form-group'>
@@ -71,7 +72,7 @@ const SignupPage: React.FC = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
-            
+            data-cy='password'
           />
         </div>
         <div className="phone-address">
@@ -82,7 +83,7 @@ const SignupPage: React.FC = () => {
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
             placeholder="Phone number"
-            
+            data-cy='phone'
           />
         </div>
         <div className="form-group">
@@ -93,7 +94,7 @@ const SignupPage: React.FC = () => {
             onChange={(e) => setAddress(e.target.value)}
             placeholder=
             "Address"
-            
+            data-cy='address'
           />
         </div>
         </div>
@@ -101,6 +102,7 @@ const SignupPage: React.FC = () => {
         <button
           type="submit"
           className='btn btn-primary'
+          data-cy='signup-btn'
         >
           Sign Up
         </button>

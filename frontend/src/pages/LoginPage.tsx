@@ -49,11 +49,11 @@ const LoginPage: React.FC = () => {
           navigate("/user-dashboard");
         } else {
           
-          setError("Please try again.");
+          setError("Invalid credentials. Please try again.");
         }
 
       } else {
-        setError("Invalid credentials. Please try again....");
+        setError("Invalid credentials. Please try again.");
       }
     } catch (err) {
       setError("Invalid credentials. Please try again.");
@@ -63,7 +63,7 @@ const LoginPage: React.FC = () => {
   return (
     <div className="container">
       <div className="form-container">
-        <h4>Login</h4>
+        <h4 data-cy='login-title'>Login</h4>
         {error && <p className="error">{error}</p>}
         <form onSubmit={handleLogin}>
           <div className="form-group">
@@ -73,19 +73,21 @@ const LoginPage: React.FC = () => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Username"
+              data-cy="username"
             />
           </div>
           <div className="form-group">
             <label>Password</label>
             <input
               type="password"
+              data-cy='password'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
             />
           </div>
           <div className="phone-address">
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-primary" data-cy='login-btn'>
               Login
             </button>
             <p>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { CiNoWaitingSign } from "react-icons/ci";
-import { FaClipboardCheck, FaMapMarkerAlt } from "react-icons/fa";
+import { FaClipboardCheck } from "react-icons/fa";
 import axios from "axios";
 import Navbar from "../components/navbar";
 
@@ -49,14 +49,14 @@ const UserPage: React.FC = () => {
     receiver_id: "",
     pickup_location: "",
     destination: "",
-    couponCode: ""
+    couponCode: "",
   });
 
-  // const [paymentInfo, setPaymentInfo] = useState<{
-  //   clientSecret: string;
-  //   calculatedAmount: number;
-  //   distance: string;
-  // } | null>(null);
+  // Add search and pagination states
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [currentPageSent, setCurrentPageSent] = useState<number>(1);
+  const [currentPageReceived, setCurrentPageReceived] = useState<number>(1);
+  const parcelsPerPage = 5;
 
   useEffect(() => {
     fetchParcels();
@@ -117,10 +117,46 @@ const UserPage: React.FC = () => {
         setShowModal(false);
       }
     } catch (err: any) {
-      console.error("Error creating parcel:", err.response?.data || err.message);
+      console.error(
+        "Error creating parcel:",
+        err.response?.data || err.message
+      );
       setError(err.response?.data?.message || "Failed to create parcel");
     }
   };
+
+  // Filter both sent and received parcels using the search query
+  const filteredSentParcels = parcels.sentParcels.filter((parcel) =>
+    Object.values(parcel).some(
+      (value) =>
+        value !== null &&
+        value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  );
+
+  const filteredReceivedParcels = parcels.receivedParcels.filter((parcel) =>
+    Object.values(parcel).some(
+      (value) =>
+        value !== null &&
+        value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  );
+
+  // Paginate sent parcels
+  const indexOfLastSent = currentPageSent * parcelsPerPage;
+  const indexOfFirstSent = indexOfLastSent - parcelsPerPage;
+  const currentSentParcels = filteredSentParcels.slice(
+    indexOfFirstSent,
+    indexOfLastSent
+  );
+
+  // Paginate received parcels
+  const indexOfLastReceived = currentPageReceived * parcelsPerPage;
+  const indexOfFirstReceived = indexOfLastReceived - parcelsPerPage;
+  const currentReceivedParcels = filteredReceivedParcels.slice(
+    indexOfFirstReceived,
+    indexOfLastReceived
+  );
 
   return (
     <>
@@ -130,40 +166,95 @@ const UserPage: React.FC = () => {
         </div>
 
         <div className="container">
-          <div style={{ marginBottom: "4rem", marginTop: "4rem" }}>
-            <button
-              className="btn btn-primary"
-              onClick={() => setShowModal(true)}
-            >
-              Create a parcel
-            </button>
+          {/* Global search input placed at the top */}
+          <div
+            style={{
+              marginBottom: "2rem",
+              marginTop: "2rem",
+              textAlign: "center",
+            }}
+          >
+            <input
+              type="text"
+              placeholder="Search parcels..."
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                // Reset pagination when a new search is performed
+                setCurrentPageSent(1);
+                setCurrentPageReceived(1);
+              }}
+              className="search-input"
+              style={{
+                padding: "0.8rem 1rem",
+                marginTop: "6rem",
+                outline: "none",
+                border: "1px solid whitesmoke",
+                color: "whitesmoke",
+              }}
+            />
+          </div>
+
+          <div style={{display:'flex', justifyContent:'space-between', gap:'4rem'}}>
+            {/* Create parcel button */}
+            <div style={{ marginBottom: "4rem" }}>
+              <button
+                className="btn btn-primary"
+                onClick={() => setShowModal(true)}
+              >
+                Create a parcel
+              </button>
+            </div>
+
+            {/* Pagination controls for sent parcels (placed at the top) */}
+            <div className="pagination" style={{ marginBottom: "1rem" }}>
+              {Array.from(
+                {
+                  length: Math.ceil(
+                    filteredSentParcels.length / parcelsPerPage
+                  ),
+                },
+                (_, i) => (
+                  <button style={{padding:'0.5rem 0.8rem', borderRadius:'0.25rem',border:'0.125px solid black', outline:'none', cursor:'pointer'}}
+                    key={i + 1}
+                    onClick={() => setCurrentPageSent(i + 1)}
+                    className={currentPageSent === i + 1 ? "active" : ""}
+                  >
+                    {i + 1}
+                  </button>
+                )
+              )}
+            </div>
           </div>
 
           <div className="user-orders-container">
+            {/* Sent parcels section */}
             <div className="sent-orders">
               <h6>Sent parcels</h6>
+
               <div className="sent-orders-wrapper">
-                {parcels.sentParcels.length > 0 ? (
-                  parcels.sentParcels.map((parcel) => (
+                {currentSentParcels.length > 0 ? (
+                  currentSentParcels.map((parcel) => (
                     <div key={parcel.parcel_id} className="parcel-card">
                       <div className="phone-address">
-                        <p>Parcel ID: {parcel.parcel_id}</p>
+                        <p>Parcel ID: <strong className="pl">{parcel.parcel_id}</strong></p>
                         <div className="status">
                           <CiNoWaitingSign className="pending-icon" />
-                          <p>{parcel.status}</p>
+                          <p className="pl">{parcel.status}</p>
                         </div>
                       </div>
                       <div className="sender phone-address">
                         <p>
                           To:{" "}
-                          {users.find(
+                          <strong className="pl">{users.find(
                             (user) => user.user_id === parcel.receiver_id
-                          )?.username || "Unknown"}
+                          )?.username || "Unknown"}</strong>
+                          
                         </p>
                       </div>
                       <div className="phone-address">
-                        <p>Pickup: {parcel.pickup_location}</p>
-                        <p>Destination: {parcel.destination}</p>
+                        <p>Pickup: <strong className="pl">{parcel.pickup_location}</strong></p>
+                        <p>Destination: <strong className="pl">{parcel.destination}</strong></p>
                       </div>
                       <div className="actions">
                         <Link
@@ -184,12 +275,31 @@ const UserPage: React.FC = () => {
               </div>
             </div>
 
+            {/* Received parcels section */}
             <div className="received-orders">
               <h6>Received parcels</h6>
+              {/* Pagination controls for received parcels (placed at the top) */}
+              <div className="pagination" style={{ marginBottom: "1rem" }}>
+                {Array.from(
+                  {
+                    length: Math.ceil(
+                      filteredReceivedParcels.length / parcelsPerPage
+                    ),
+                  },
+                  (_, i) => (
+                    <button
+                      key={i + 1}
+                      onClick={() => setCurrentPageReceived(i + 1)}
+                      className={currentPageReceived === i + 1 ? "active" : ""}
+                    >
+                      {i + 1}
+                    </button>
+                  )
+                )}
+              </div>
               <div className="sent-orders-wrapper">
-                {Array.isArray(parcels.receivedParcels) &&
-                parcels.receivedParcels.length > 0 ? (
-                  parcels.receivedParcels.map((parcel) => (
+                {currentReceivedParcels.length > 0 ? (
+                  currentReceivedParcels.map((parcel) => (
                     <div key={parcel.parcel_id} className="parcel-card">
                       <div className="phone-address">
                         <p>Parcel ID: {parcel.parcel_id}</p>
@@ -285,7 +395,7 @@ const UserPage: React.FC = () => {
                   ))}
                 </select>
 
-<input
+                <input
                   type="text"
                   placeholder="Coupon Code (optional)"
                   onChange={(e) =>
